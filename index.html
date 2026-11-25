@@ -1,0 +1,2855 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Check In Mental — Ruang Aman & Hangat untuk Kesehatan Mentalmu</title>
+
+  <!-- Font Sesuai ROD: Glacial Indifference (Bold & Regular) + Handwriting Regular (Patrick Hand) -->
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+  <link href="https://fonts.cdnfonts.com/css/glacial-indifference-2" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            /* 60% Background & Turunannya */
+            cream: '#FFF9F2',
+            creamCard: '#FFFDF9',
+            sidebarBg: '#FBF3E9',
+            warmBorder: '#EFE2D3',
+
+            /* 30% Primary & Secondary + Turunannya */
+            primaryBlue: '#3E8EDE',
+            primaryBlueHover: '#2F7AC6',
+            softBlueBg: '#E6F1FC',
+            softBlueBlob: '#DFEEFB',
+            activeNavBlue: '#E2EEFA',
+
+            secondaryTerracotta: '#C98A5A',
+            secondaryHover: '#B57647',
+            softSecondaryBg: '#F6EAE0',
+            softSecondaryBlob: '#F3E3D6',
+
+            /* 10% Complementary + Turunannya */
+            compYellow: '#FFD166',
+            softYellowBg: '#FFF5D6',
+            compMint: '#A2E2C7',
+            softMintBg: '#E5F7EF',
+
+            /* Warna Teks Utama & Turunan */
+            espresso: '#3A2E2E',
+            mutedBrown: '#685858',
+          },
+          fontFamily: {
+            heading: ['"Glacial Indifference"', 'sans-serif'],
+            sans: ['"Glacial Indifference"', 'sans-serif'],
+            hand: ['"Patrick Hand"', 'cursive'],
+          },
+          fontSize: {
+            /* Skala Golden Ratio ROD (45 -> 28 -> 17.3 -> 11) */
+            'rod-title': ['45px', { lineHeight: '1.12', letterSpacing: '-0.015em' }],
+            'rod-subtitle': ['28px', { lineHeight: '1.25' }],
+            'rod-body': ['17.3px', { lineHeight: '1.55' }],
+            'rod-note': ['11px', { lineHeight: '1.4' }],
+          },
+          boxShadow: {
+            softCard: '0 8px 26px rgba(58, 46, 46, 0.04)',
+            softBtn: '0 4px 14px rgba(58, 46, 46, 0.06)',
+            sidebar: '-4px 0 24px rgba(58, 46, 46, 0.08)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Variabel Golden Ratio Font sesuai ROD + Adaptif HP, Tablet/iPad, & Laptop */
+    :root {
+      --font-judul: 45px;
+      --font-subjudul: 28px;       /* 45 ÷ 1.618 = 27.81 ≈ 28px */
+      --font-body: clamp(15.5px, 2.1vw, 17.3px);
+      --font-note: 11px;           /* 17.3 ÷ 1.618 = 10.69 ≈ 11px */
+    }
+
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      background-color: #FFF9F2;
+      color: #3A2E2E;
+      font-family: 'Glacial Indifference', sans-serif;
+      font-size: var(--font-body);
+      font-weight: 400;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+
+    /* Kelas Tipografi Golden Ratio */
+    .rod-judul-besar {
+      font-family: 'Glacial Indifference', sans-serif;
+      font-weight: 700;
+      font-size: clamp(30px, 5.2vw, var(--font-judul));
+      line-height: 1.14;
+      color: #3A2E2E;
+    }
+
+    .rod-sub-judul {
+      font-family: 'Glacial Indifference', sans-serif;
+      font-weight: 700;
+      font-size: clamp(20px, 3.2vw, var(--font-subjudul));
+      line-height: 1.25;
+      color: #3A2E2E;
+    }
+
+    .rod-body-text {
+      font-family: 'Glacial Indifference', sans-serif;
+      font-weight: 400;
+      font-size: var(--font-body);
+      line-height: 1.55;
+    }
+
+    .rod-note-text {
+      font-family: 'Patrick Hand', cursive;
+      font-weight: 400;
+      font-size: var(--font-note);
+      line-height: 1.35;
+    }
+
+    .rod-quote-hand {
+      font-family: 'Patrick Hand', cursive;
+      font-weight: 400;
+      font-size: var(--font-body);
+      line-height: 1.45;
+    }
+
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FBF3E9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #DECBB8;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C98A5A;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .animate-gentle-float {
+      animation: gentleFloat 4.5s ease-in-out infinite;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .view-enter {
+      animation: fadeSlideUp 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .explore-card {
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+    }
+    @media (hover: hover) {
+      .explore-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 26px rgba(58, 46, 46, 0.07);
+      }
+    }
+
+    .sidebar-drawer {
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), width 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+    }
+
+    /* Penyesuaian otomatis jika tinggi layar pendek (HP lanskap / layar kecil) agar sidebar tetap muat */
+    @media (max-height: 640px) {
+      #sidebar-logo-slot {
+        width: 50px !important;
+        height: 50px !important;
+      }
+      #right-sidebar .nav-item {
+        padding-top: 0.35rem !important;
+        padding-bottom: 0.35rem !important;
+      }
+      #right-sidebar .subnav-item {
+        padding-top: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen min-h-dvh bg-cream text-espresso selection:bg-softBlueBg selection:text-espresso">
+
+  <!-- App Root Wrapper -->
+  <div id="app" class="relative min-h-screen min-h-dvh flex flex-col lg:flex-row">
+
+    <!-- ==================== MAIN CONTENT AREA (LEFT) ==================== -->
+    <main id="main-area" class="relative flex-1 min-w-0 min-h-screen min-h-dvh overflow-x-hidden transition-all duration-300">
+
+      <!-- Organic Pastel Background Blobs (Skala adaptif HP, Tablet, Laptop) -->
+      <svg class="pointer-events-none select-none absolute -top-6 left-[28%] sm:left-[36%] w-[180px] sm:w-[270px] lg:w-[340px] h-[95px] sm:h-[125px] lg:h-[145px] z-0" viewBox="0 0 360 150" fill="none">
+        <path d="M-10 -10 C 10 85, 65 135, 145 110 C 215 88, 285 45, 365 75 L 365 -10 Z" fill="#DFEEFB" />
+      </svg>
+
+      <svg class="pointer-events-none select-none absolute -top-4 right-0 w-[165px] sm:w-[250px] lg:w-[310px] h-[125px] sm:h-[180px] lg:h-[210px] z-0" viewBox="0 0 320 220" fill="none">
+        <path d="M55 -10 C 25 35, 50 75, 115 95 C 175 115, 225 185, 325 175 L 325 -10 Z" fill="#F3E3D6" />
+      </svg>
+
+      <svg class="pointer-events-none select-none absolute top-[280px] sm:top-[310px] -left-6 w-[55px] sm:w-[80px] lg:w-[95px] h-[160px] sm:h-[190px] z-0" viewBox="0 0 100 200" fill="none">
+        <path d="M0 10 C 55 25, 72 75, 58 125 C 46 165, 22 185, 0 195 Z" fill="#E5F7EF" />
+      </svg>
+
+      <!-- Main Inner Container -->
+      <div id="main-inner" class="relative z-10 max-w-[1060px] mx-auto px-4 sm:px-8 lg:px-11 pt-4 sm:pt-6 lg:pt-7 pb-12 transition-all duration-300">
+
+        <!-- ==================== TOP NAVBAR ==================== -->
+        <header class="flex items-center justify-between gap-3 mb-5 sm:mb-7 lg:mb-8">
+          <button onclick="navigateTo('beranda')" class="group flex items-center gap-2.5 sm:gap-3 text-left focus:outline-none min-h-[44px]" aria-label="Kembali ke Beranda Check In Mental">
+            <div id="navbar-logo-slot" class="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 transition-transform duration-300 group-hover:scale-105"></div>
+            <span class="font-heading font-bold text-[19px] sm:text-[22px] lg:text-[23px] tracking-tight text-espresso">
+              Check In Mental
+            </span>
+          </button>
+
+          <div class="relative flex items-center gap-2.5">
+            <!-- Mobile/Tablet Menu Label + Desktop Sidebar Toggle Button -->
+            <button
+              id="sidebar-toggle-btn"
+              onclick="toggleSidebar()"
+              class="h-10 sm:h-11 px-3 lg:px-0 lg:w-10 rounded-xl bg-creamCard shadow-softBtn border border-warmBorder flex items-center justify-center gap-2 text-espresso hover:bg-white active:scale-95 transition"
+              aria-label="Buka atau Tutup Menu Samping"
+              title="Menu Navigasi"
+            >
+              <!-- Ikon Hamburger khusus HP & Tablet (< 1024px) -->
+              <svg id="sidebar-toggle-menu-icon" class="w-5 h-5 lg:hidden" viewBox="0 0 24 24" fill="none" stroke="#3A2E2E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="7" x2="20" y2="7"></line>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <line x1="4" y1="17" x2="20" y2="17"></line>
+              </svg>
+              <span class="text-[13.5px] font-heading font-bold lg:hidden">Menu</span>
+
+              <!-- Ikon Panah khusus Laptop/Desktop (>= 1024px) -->
+              <svg id="sidebar-toggle-chevron" class="hidden lg:block w-4 h-4 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="#3A2E2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- ==================== DYNAMIC VIEW CONTAINER ==================== -->
+        <div id="view-container">
+          <!-- Default View: Beranda -->
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Mobile & Tablet Backdrop Overlay when Sidebar Drawer is open -->
+    <div
+      id="sidebar-backdrop"
+      onclick="closeSidebarMobile()"
+      class="fixed inset-0 bg-espresso/25 backdrop-blur-[1.5px] z-30 hidden lg:hidden transition-opacity"
+    ></div>
+
+    <!-- ==================== RIGHT SIDEBAR DRAWER ==================== -->
+    <aside
+      id="right-sidebar"
+      class="sidebar-drawer fixed lg:sticky top-0 right-0 z-40 h-screen h-dvh flex-shrink-0 bg-sidebarBg shadow-sidebar border-l border-warmBorder overflow-y-auto overflow-x-hidden"
+      aria-label="Navigasi Utama Check In Mental"
+    >
+      <div class="w-[86vw] max-w-[320px] sm:w-[325px] lg:w-[305px] xl:w-[330px] h-full min-h-full flex flex-col justify-between pb-[env(safe-area-inset-bottom)]">
+        <div class="px-4 sm:px-5 pt-3 pb-2">
+          <!-- Top-Right Close Button -->
+          <div class="flex justify-end">
+            <button
+              onclick="toggleSidebar(false)"
+              class="w-9 h-9 rounded-xl flex items-center justify-center text-espresso/80 hover:text-espresso hover:bg-espresso/5 active:scale-95 transition"
+              aria-label="Tutup Sidebar"
+              title="Tutup Menu"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#3A2E2E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Centered Mascot & Uppercase Brand Header -->
+          <div class="flex flex-col items-center text-center mb-3">
+            <div id="sidebar-logo-slot" class="w-[66px] h-[66px] sm:w-[72px] sm:h-[72px] mb-0.5"></div>
+            <h2 class="font-heading font-bold text-[16px] sm:text-[17px] tracking-[0.03em] text-espresso uppercase leading-tight">
+              CHECK IN MENTAL
+            </h2>
+            <svg class="w-32 h-2.5 mt-0.5" viewBox="0 0 150 12" fill="none">
+              <path d="M4 6 Q 18 2, 32 6 T 60 6 T 88 6 T 116 6 T 146 6" stroke="#C98A5A" stroke-width="3" stroke-linecap="round" />
+            </svg>
+            <div class="w-full h-[1px] bg-warmBorder mt-2.5"></div>
+          </div>
+
+          <!-- Navigation Menu List -->
+          <nav class="space-y-1 text-[15px]">
+
+            <!-- 1. Beranda -->
+            <button
+              data-nav="beranda"
+              onclick="navigateTo('beranda')"
+              class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 lg:py-2 rounded-[13px] text-left transition font-normal text-espresso hover:bg-activeNavBlue/70"
+            >
+              <svg class="w-[18px] h-[18px] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="#3E8EDE" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 10.5L12 3l9 7.5" />
+                <path d="M5 9.5V19a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19V9.5" />
+                <path d="M9.5 20.5v-6a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v6" />
+              </svg>
+              <span>Beranda</span>
+            </button>
+
+            <!-- 2. Cek Kondisi Mental -->
+            <button
+              data-nav="cek-kondisi"
+              onclick="navigateTo('cek-kondisi')"
+              class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 lg:py-2 rounded-[13px] text-left transition font-normal text-espresso hover:bg-activeNavBlue/70"
+            >
+              <svg class="w-[18px] h-[18px] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="#3E8EDE" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                <path d="M5 12h3.5l1.5 -3l2.5 6l1.5 -3h5" />
+              </svg>
+              <span>Cek Kondisi Mental</span>
+            </button>
+
+            <!-- 3. Layanan Konsultasi (Accordion) -->
+            <div>
+              <div class="flex items-center rounded-[13px] transition hover:bg-activeNavBlue/70" id="konsultasi-nav-wrapper">
+                <button
+                  data-nav="konsultasi"
+                  onclick="navigateTo('konsultasi', { filter: 'Panduan' })"
+                  class="nav-item flex-1 flex items-center gap-3 pl-3.5 pr-2 py-2.5 lg:py-2 rounded-l-[13px] text-left transition font-normal text-espresso"
+                >
+                  <svg class="w-[18px] h-[18px] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="#3E8EDE" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 11.5C10.2 9.9 8 8.3 8 6.4A2.4 2.4 0 0 1 10.4 4c.8 0 1.4.4 1.6.9.2-.5.8-.9 1.6-.9A2.4 2.4 0 0 1 16 6.4c0 1.9-2.2 3.5-4 5.1z" />
+                    <path d="M3 16.5h4.5l3 1.5h4c1.1 0 2-.9 2-2s-.9-2-2-2h-3.5" />
+                    <path d="M3 19.5h11.5l5.5-2.5c.8-.4 1.2-1.3.8-2.1-.4-.8-1.3-1.1-2.1-.7L15 16" />
+                  </svg>
+                  <span>Layanan Konsultasi</span>
+                </button>
+                <button
+                  onclick="toggleSubmenu()"
+                  class="px-3 py-2.5 lg:py-2 text-espresso/80 hover:text-espresso focus:outline-none"
+                  aria-label="Buka atau tutup submenu Layanan Konsultasi"
+                >
+                  <svg id="konsultasi-chevron" class="w-4 h-4 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#3A2E2E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Submenu -->
+              <div id="konsultasi-submenu" class="relative pl-6 pr-2 pt-0.5 pb-1 space-y-0.5">
+                <svg class="pointer-events-none absolute left-[20px] top-0 w-6 h-full" viewBox="0 0 24 105" fill="none">
+                  <path d="M4 2 C 3 13, 8 18, 16 19" stroke="#DFC5B0" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M12 60 C 5 68, 4 78, 11 87" stroke="#DFC5B0" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+
+                <button
+                  data-subnav="Konselor"
+                  onclick="navigateTo('konsultasi', { filter: 'Konselor' })"
+                  class="subnav-item w-full flex items-center gap-2.5 pl-5 pr-3 py-2 lg:py-1.5 rounded-xl text-[14px] text-espresso/90 hover:text-espresso hover:bg-softSecondaryBg/70 transition text-left"
+                >
+                  <span class="w-2 h-2 rounded-full bg-secondaryTerracotta flex-shrink-0"></span>
+                  <span>Konselor</span>
+                </button>
+
+                <button
+                  data-subnav="Psikolog"
+                  onclick="navigateTo('konsultasi', { filter: 'Psikolog' })"
+                  class="subnav-item w-full flex items-center gap-2.5 pl-5 pr-3 py-2 lg:py-1.5 rounded-xl text-[14px] text-espresso/90 hover:text-espresso hover:bg-softSecondaryBg/70 transition text-left"
+                >
+                  <span class="w-2 h-2 rounded-full bg-secondaryTerracotta flex-shrink-0"></span>
+                  <span>Psikolog</span>
+                </button>
+
+                <button
+                  data-subnav="Psikiater"
+                  onclick="navigateTo('konsultasi', { filter: 'Psikiater' })"
+                  class="subnav-item w-full flex items-center gap-2.5 pl-5 pr-3 py-2 lg:py-1.5 rounded-xl text-[14px] text-espresso/90 hover:text-espresso hover:bg-softSecondaryBg/70 transition text-left"
+                >
+                  <span class="w-2 h-2 rounded-full bg-secondaryTerracotta flex-shrink-0"></span>
+                  <span>Psikiater</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4. Rekomendasi Tempat Healing -->
+            <button
+              data-nav="tempat-healing"
+              onclick="navigateTo('tempat-healing')"
+              class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 lg:py-2 rounded-[13px] text-left transition font-normal text-espresso hover:bg-activeNavBlue/70"
+            >
+              <svg class="w-[18px] h-[18px] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="#3E8EDE" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 1 1 13 0c0 5.4-6.5 11-6.5 11z" />
+                <circle cx="12" cy="10" r="2.4" />
+              </svg>
+              <span>Rekomendasi Tempat Healing</span>
+            </button>
+
+            <!-- 5. Rekomendasi Buku -->
+            <button
+              data-nav="buku"
+              onclick="navigateTo('buku')"
+              class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 lg:py-2 rounded-[13px] text-left transition font-normal text-espresso hover:bg-activeNavBlue/70"
+            >
+              <svg class="w-[18px] h-[18px] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="#3E8EDE" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 5.5A2.5 2.5 0 0 1 4.5 3H10a2 2 0 0 1 2 2v14a1.5 1.5 0 0 0-1.5-1.5H4.5A2.5 2.5 0 0 1 2 15V5.5z" />
+                <path d="M22 5.5A2.5 2.5 0 0 0 19.5 3H14a2 2 0 0 0-2 2v14a1.5 1.5 0 0 1 1.5-1.5h6A2.5 2.5 0 0 0 22 15V5.5z" />
+              </svg>
+              <span>Rekomendasi Buku</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Bottom Motivational Cloud Badge -->
+        <div class="px-4 sm:px-5 pb-4 pt-1.5">
+          <div class="relative bg-softMintBg border border-compMint/60 rounded-[26px] px-4 py-2.5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+            <svg class="w-5 h-5 absolute top-2 right-3" viewBox="0 0 28 28" fill="none">
+              <path d="M7 11 L11 4" stroke="#FFD166" stroke-width="2.4" stroke-linecap="round" />
+              <path d="M12 14 L20 9" stroke="#C98A5A" stroke-width="2.2" stroke-linecap="round" />
+              <path d="M14 19 L22 18" stroke="#FFD166" stroke-width="2.4" stroke-linecap="round" />
+            </svg>
+            <p class="font-hand text-[16px] leading-snug text-espresso">
+              You're doing great!<br />
+              Take care of your mind
+              <svg class="inline-block w-3.5 h-3.5 ml-0.5 -mt-0.5" viewBox="0 0 24 24" fill="none" stroke="#3A2E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20.5C12 20.5 3.5 15 3.5 8.8C3.5 6.1 5.6 4 8.2 4C9.8 4 11.2 4.8 12 6C12.8 4.8 14.2 4 15.8 4C18.4 4 20.5 6.1 20.5 8.8C20.5 15 12 20.5 12 20.5Z" />
+              </svg>
+            </p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ==================== GLOBAL INTERACTIVE MODAL & TOAST ==================== -->
+  <div id="modal-overlay" class="fixed inset-0 bg-espresso/30 backdrop-blur-[2px] z-50 hidden items-center justify-center p-3.5 sm:p-5">
+    <div id="modal-box" class="bg-creamCard border border-warmBorder rounded-[26px] sm:rounded-[28px] max-w-lg w-full p-5 sm:p-7 shadow-2xl relative view-enter max-h-[88dvh] overflow-y-auto">
+      <button onclick="closeModal()" class="absolute top-4 right-4 sm:top-5 sm:right-5 w-9 h-9 rounded-xl bg-cream hover:bg-softSecondaryBg flex items-center justify-center text-espresso transition" aria-label="Tutup jendela">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#3A2E2E" stroke-width="2.4" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Gentle Floating Toast Notification -->
+  <div id="toast-banner" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-2 bg-espresso text-cream px-4 sm:px-5 py-2.5 sm:py-3 rounded-full shadow-lg text-[14px] sm:text-[15px] max-w-[90vw] text-center">
+    <span id="toast-icon">✨</span>
+    <span id="toast-text">Tersimpan dengan hangat!</span>
+  </div>
+
+  <!-- ==================== APPLICATION LOGIC & TEMPLATES ==================== -->
+  <script>
+    /* ==========================================================================
+       1. CUSTOM HAND-DRAWN MASCOT SVG GENERATOR (LOGO NAVBAR, SIDEBAR & BERANDA)
+    ========================================================================== */
+    function getMascotSVG({ withBackdrop = false, withExtraSparkles = true, className = "w-full h-full" } = {}) {
+      return `
+        <svg class="${className}" viewBox="0 0 260 245" fill="none" xmlns="http://www.w3.org/2000/svg">
+          ${withBackdrop ? `
+            <path d="M52 175 C 24 172, 14 136, 36 114 C 24 84, 52 52, 86 60 C 102 34, 148 34, 168 62 C 204 56, 232 88, 218 122 C 238 146, 222 182, 188 182 Z" fill="#DFEEFB" />
+          ` : ''}
+
+          <path d="M68 124 C 50 121, 47 152, 69 156" stroke="#3E8EDE" stroke-width="4.2" stroke-linecap="round" />
+          <path d="M180 124 C 198 121, 201 152, 179 156" stroke="#3E8EDE" stroke-width="4.2" stroke-linecap="round" />
+
+          <path d="M67 116 C 64 166, 92 192, 124 192 C 156 192, 184 166, 181 116" stroke="#3E8EDE" stroke-width="4.2" stroke-linecap="round" />
+
+          <ellipse cx="90" cy="153" rx="11" ry="8" fill="#F3DFD0" />
+          <ellipse cx="158" cy="153" rx="11" ry="8" fill="#F3DFD0" />
+
+          <path d="M84 136 Q 96 146, 108 136" stroke="#3E8EDE" stroke-width="4" stroke-linecap="round" />
+          <path d="M84 137 L 79 141" stroke="#3E8EDE" stroke-width="3.2" stroke-linecap="round" />
+
+          <path d="M140 136 Q 152 146, 164 136" stroke="#3E8EDE" stroke-width="4" stroke-linecap="round" />
+          <path d="M164 137 L 169 141" stroke="#3E8EDE" stroke-width="3.2" stroke-linecap="round" />
+
+          <path d="M117 156 Q 124 162, 131 156" stroke="#3E8EDE" stroke-width="3.8" stroke-linecap="round" />
+
+          <path d="M67 116
+                   C 56 96, 68 72, 91 74
+                   C 94 50, 128 44, 142 66
+                   C 162 60, 182 76, 176 94
+                   C 192 102, 189 124, 174 126
+                   C 162 128, 150 120, 146 112"
+                stroke="#3E8EDE" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" />
+
+          <path d="M93 114
+                   C 82 114, 77 102, 85 96
+                   C 90 92, 95 96, 96 100
+                   C 97 96, 102 92, 107 96
+                   C 115 102, 108 114, 93 114 Z"
+                stroke="#3E8EDE" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+
+          <path d="M116 113 C 127 116, 141 110, 142 98" stroke="#3E8EDE" stroke-width="3.8" stroke-linecap="round" />
+
+          <path d="M142 64 C 141 48, 152 38, 161 36 C 163 48, 155 61, 142 64 Z" fill="#FFF9F2" stroke="#3E8EDE" stroke-width="3.6" stroke-linejoin="round" />
+          <path d="M144 62 L 155 44" stroke="#3E8EDE" stroke-width="2.6" stroke-linecap="round" />
+
+          <path d="M140 76 C 126 74, 118 66, 117 59 C 127 57, 138 64, 140 76 Z" fill="#FFF9F2" stroke="#3E8EDE" stroke-width="3.4" stroke-linejoin="round" />
+
+          <path d="M174 88 C 175 74, 184 65, 193 63 C 195 74, 187 86, 174 88 Z" fill="#FFF9F2" stroke="#3E8EDE" stroke-width="3.6" stroke-linejoin="round" />
+          <path d="M176 86 L 187 70" stroke="#3E8EDE" stroke-width="2.6" stroke-linecap="round" />
+
+          <path d="M158 116 C 156 104, 163 95, 171 93 C 173 103, 167 113, 158 116 Z" fill="#FFF9F2" stroke="#3E8EDE" stroke-width="3.4" stroke-linejoin="round" />
+
+          <path d="M135 98 C 130 90, 132 81, 137 78 C 143 82, 143 92, 135 98 Z" fill="#FFF9F2" stroke="#3E8EDE" stroke-width="3.3" stroke-linejoin="round" />
+
+          ${withExtraSparkles ? `
+            <path d="M214 96 C 214 96, 202 88, 202 79 C 202 74, 206 71, 210 71 C 212.5 71, 214 72.5, 215 74.2 C 216 72.5, 217.5 71, 220 71 C 224 71, 228 74, 228 79 C 228 88, 214 96, 214 96 Z"
+                  fill="#FFD166" stroke="#C98A5A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+            <path d="M220 120 L 234 111" stroke="#C98A5A" stroke-width="3.6" stroke-linecap="round" />
+            <path d="M223 132 L 241 131" stroke="#FFD166" stroke-width="3.6" stroke-linecap="round" />
+          ` : ''}
+        </svg>
+      `;
+    }
+
+    /* ==========================================================================
+       1B. STAR EXPRESSION SVG GENERATOR (KHUSUS HASIL CEK KONDISI MENTAL)
+    ========================================================================== */
+    function getStarExpressionSVG(expression = 'bahagia', className = "w-full h-full") {
+      const uid = Math.random().toString(36).slice(2, 7);
+      const starPath = "M 110 26 L 140.6 72.9 L 193.7 87.8 L 159.5 131.1 L 161.7 186.2 L 110 167 L 58.3 186.2 L 60.5 131.1 L 26.3 87.8 L 79.4 72.9 Z";
+
+      let faceMarkup = '';
+      if (expression === 'bahagia') {
+        faceMarkup = `
+          <path d="M 80 105 L 95 112 L 80 119" stroke="#2D3345" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M 140 105 L 125 112 L 140 119" stroke="#2D3345" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M 97 122 Q 110 120 123 122 C 125 135 118 143 110 143 C 102 143 95 135 97 122 Z" fill="#2D3345" />
+          <ellipse cx="110" cy="136.5" rx="7.5" ry="4.5" fill="#E86E68" />
+        `;
+      } else if (expression === 'senang') {
+        faceMarkup = `
+          <path d="M 79 115 Q 88.5 103 98 115" stroke="#2D3345" stroke-width="4.8" stroke-linecap="round" fill="none" />
+          <path d="M 122 115 Q 131.5 103 141 115" stroke="#2D3345" stroke-width="4.8" stroke-linecap="round" fill="none" />
+          <path d="M 103 123 Q 110 129.5 117 123" stroke="#2D3345" stroke-width="4.5" stroke-linecap="round" fill="none" />
+        `;
+      } else if (expression === 'flat') {
+        faceMarkup = `
+          <circle cx="88.5" cy="113" r="8" fill="#FFFFFF" stroke="#2D3345" stroke-width="3.6" />
+          <circle cx="86" cy="113" r="4.2" fill="#2D3345" />
+          <circle cx="131.5" cy="113" r="8" fill="#FFFFFF" stroke="#2D3345" stroke-width="3.6" />
+          <circle cx="129" cy="113" r="4.2" fill="#2D3345" />
+          <line x1="104" y1="127.5" x2="116" y2="127.5" stroke="#2D3345" stroke-width="4.5" stroke-linecap="round" />
+        `;
+      } else {
+        faceMarkup = `
+          <path d="M 79 110 Q 88.5 120 98 110" stroke="#2D3345" stroke-width="4.8" stroke-linecap="round" fill="none" />
+          <path d="M 122 110 Q 131.5 120 141 110" stroke="#2D3345" stroke-width="4.8" stroke-linecap="round" fill="none" />
+          <path d="M 102 132 Q 110 122.5 118 132" stroke="#2D3345" stroke-width="4.5" stroke-linecap="round" fill="none" />
+        `;
+      }
+
+      return `
+        <svg class="${className}" viewBox="0 0 220 215" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi Bintang">
+          <defs>
+            <radialGradient id="starBodyGrad-${uid}" cx="50%" cy="54%" r="54%">
+              <stop offset="0%" stop-color="#FFE066" />
+              <stop offset="68%" stop-color="#FFBE3D" />
+              <stop offset="100%" stop-color="#F28518" />
+            </radialGradient>
+            <filter id="crayonSoft-${uid}" x="-12%" y="-12%" width="124%" height="124%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="7" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.4" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+            <clipPath id="starClip-${uid}">
+              <path d="${starPath}" stroke="#F28518" stroke-width="18" stroke-linejoin="round" />
+            </clipPath>
+          </defs>
+
+          <g filter="url(#crayonSoft-${uid})">
+            <path d="${starPath}" fill="url(#starBodyGrad-${uid})" stroke="#F28518" stroke-width="18" stroke-linejoin="round" />
+            <path d="${starPath}" fill="none" stroke="#FFD65A" stroke-width="6" stroke-linejoin="round" opacity="0.65" />
+
+            <g clip-path="url(#starClip-${uid})">
+              <path d="M 74 56 Q 110 66 146 56 L 146 70 Q 110 80 74 70 Z" fill="#46506E" stroke="#313952" stroke-width="2" />
+            </g>
+
+            <circle cx="110" cy="64.5" r="13.5" fill="#E9EEF6" stroke="#313952" stroke-width="2.6" />
+            <circle cx="110" cy="64.5" r="10.5" fill="#CFD8E8" opacity="0.5" />
+            <path d="M 110 71.5 C 110 71.5 101.8 66.2 101.8 61.3 C 101.8 58.7 103.8 57 106.1 57 C 107.7 57 109.1 57.8 110 59.1 C 110.9 57.8 112.3 57 113.9 57 C 116.2 57 118.2 58.7 118.2 61.3 C 118.2 66.2 110 71.5 110 71.5 Z"
+                  fill="#D63638" stroke="#8C1D1F" stroke-width="1.3" stroke-linejoin="round" />
+            <circle cx="105.6" cy="60.4" r="1.2" fill="#FF9E9E" />
+          </g>
+
+          <ellipse cx="75.5" cy="127" rx="11.5" ry="7" fill="#F27E72" opacity="0.88" />
+          <path d="M 70 129.5 L 72.5 124.5 M 74.5 129.5 L 77 124.5 M 79 129.5 L 81.5 124.5" stroke="#FFF9F2" stroke-width="1.8" stroke-linecap="round" />
+
+          <ellipse cx="144.5" cy="127" rx="11.5" ry="7" fill="#F27E72" opacity="0.88" />
+          <path d="M 139 129.5 L 141.5 124.5 M 143.5 129.5 L 146 124.5 M 148 129.5 L 150.5 124.5" stroke="#FFF9F2" stroke-width="1.8" stroke-linecap="round" />
+
+          ${faceMarkup}
+        </svg>
+      `;
+    }
+
+    /* ==========================================================================
+       2. APPLICATION STATE & DATA
+    ========================================================================== */
+    let lastWasDesktop = window.innerWidth >= 1024;
+
+    const state = {
+      currentView: 'beranda',
+      sidebarOpen: lastWasDesktop,
+      submenuOpen: true,
+      konsultasiFilter: 'Panduan',
+      psikologMode: 'Semua',
+      psikologAgeGroup: 'Dewasa',
+      healingAreaFilter: 'Semua',
+      healingSearch: '',
+      bookFilter: 'Semua',
+      currentQuestionIdx: 0,
+      answers: {}
+    };
+
+    /* --- DATA ASESMEN 21 ITEM --- */
+    const FREQUENCY_OPTIONS = [
+      { score: 4, emoji: '🌿', label: 'Tidak pernah' },
+      { score: 3, emoji: '🌤️', label: 'Kadang-kadang' },
+      { score: 2, emoji: '🌥️', label: 'Sering' },
+      { score: 1, emoji: '🌧️', label: 'Sangat sering' }
+    ];
+
+    const QUESTIONNAIRE_STATEMENTS = [
+      'Menjadi marah karena hal-hal sepele.',
+      'Tidak dapat melihat hal positif dari suatu kejadian.',
+      'Merasa tidak kuat lagi melakukan kegiatan.',
+      'Cenderung bereaksi berlebihan pada situasi di sekitar.',
+      'Kesulitan untuk rileks atau bersantai.',
+      'Cemas berlebihan dalam suatu situasi namun lega jika situasi itu berakhir.',
+      'Merasa pesimis.',
+      'Mudah merasa kesal.',
+      'Merasa banyak menghabiskan energi karena cemas.',
+      'Merasa sedih atau tertekan.',
+      'Merasa tidak sabaran.',
+      'Merasa kelelahan (secara fisik maupun mental).',
+      'Kehilangan minat pada banyak hal (seperti makan, bergerak, atau bersosialisasi).',
+      'Mudah tersinggung.',
+      'Sulit untuk beristirahat.',
+      'Tidak dapat menikmati hal yang sedang dilakukan.',
+      'Merasa hilang harapan dan putus asa.',
+      'Mudah panik.',
+      'Kesulitan untuk tenang setelah terjadi sesuatu yang mengganggu.',
+      'Mudah gelisah.'
+    ];
+
+    const ASSESSMENT_QUESTIONS = [
+      {
+        id: 'mood',
+        isMood: true,
+        question: 'Kalau suasana hatimu dibayangkan seperti cuaca, kira-kira seperti apa cuaca hari ini?',
+        helperText: 'Pilih gambar cuaca yang paling menggambarkan perasaanmu saat ini:',
+        options: [
+          { score: 30, emoji: '☀️', label: 'Sangat cerah' },
+          { score: 20, emoji: '🌤️', label: 'Sejuk' },
+          { score: 10, emoji: '☁️', label: 'Mendung' },
+          { score: 0, emoji: '⛈️', label: 'Hujan badai' }
+        ]
+      },
+      ...QUESTIONNAIRE_STATEMENTS.map((text, index) => ({
+        id: `q${index + 1}`,
+        isMood: false,
+        question: `${index + 1}. ${text}`,
+        helperText: 'Seberapa sering kamu merasakan atau mengalami kondisi ini akhir-akhir ini?',
+        options: FREQUENCY_OPTIONS
+      }))
+    ];
+
+    /* --- DATA RINGKASAN 3 PROFESI (TAB KENALI 3 PROFESI) --- */
+    const PROFESSION_OVERVIEW = [
+      {
+        role: 'Konselor',
+        badge: 'Pendampingan & Masalah Sehari-hari',
+        theme: 'blue',
+        tagline: 'Teman diskusi aman buat ngurai masalah dan cari jalan keluar',
+        summary: 'Membantu kamu ngobrolin masalah lewat sesi konseling, memahami akar persoalan, dan menyusun langkah penyelesaian bareng-bareng. Konselor tidak mendiagnosis gangguan jiwa dan tidak memberi resep obat.',
+        highlights: [
+          'Stres sekolah/kuliah, bingung milih jurusan atau arah karier',
+          'Konflik sama teman, pacar, orang tua, atau masalah pola asuh',
+          'Kurang percaya diri atau butuh cerita ke orang yang nggak menghakimi'
+        ],
+        ctaText: 'Buka Info & Tempat Konselor'
+      },
+      {
+        role: 'Psikolog',
+        badge: 'Asesmen Klinis & Psikoterapi',
+        theme: 'terracotta',
+        tagline: 'Membantu pemeriksaan psikologis mendalam & terapi terarah',
+        summary: 'Psikolog berlisensi menangani kondisi yang butuh asesmen mendalam, diagnosis klinis, psikotes terstandarisasi, maupun psikoterapi terstruktur tanpa meresepkan obat.',
+        highlights: [
+          'Terjebak pikiran negatif/pesimis kronis (> 2 minggu)',
+          'Gangguan pola makan & tidur berturut-turut, atau trauma masa lalu',
+          'Keluhan fisik akibat beban pikiran (psikosomatis) & emosi sulit terkendali'
+        ],
+        ctaText: 'Buka Info & Rekomendasi Psikolog'
+      },
+      {
+        role: 'Psikiater',
+        badge: 'Dokter Spesialis Kedokteran Jiwa (Sp.KJ)',
+        theme: 'mint',
+        tagline: 'Penanganan medis saat kondisi mental sudah berat & butuh obat',
+        summary: 'Dokter spesialis kedokteran jiwa (Sp.KJ) yang memeriksa, mendiagnosis, dan menangani gangguan kesehatan mental dari sisi medis, termasuk meresepkan obat bila dibutuhkan.',
+        highlights: [
+          'Keluhan berat, berlangsung lama, dan mengganggu aktivitas sehari-hari',
+          'Depresi berat, gangguan kecemasan parah, bipolar, atau gangguan tidur berat',
+          'Muncul risiko menyakiti diri atau butuh evaluasi pengobatan medis'
+        ],
+        ctaText: 'Buka Info & Rekomendasi Psikiater'
+      }
+    ];
+
+    /* --- DATA LENGKAP KONSELOR --- */
+    const KONSELOR_DATA = {
+      apaItu: 'Konselor adalah orang yang membantu kita mengobrolkan masalah dan mencari jalan keluarnya lewat sesi konseling. Dia mendengarkan cerita kita, fokus mengurai masalahnya, lalu memberi arahan. Bedanya dengan dokter, konselor tidak mendiagnosis gangguan jiwa dan tidak bisa memberikan resep obat.',
+      tugas: [
+        'Mendengarkan cerita kita dengan penuh perhatian',
+        'Membantu kita memahami masalah kita sendiri',
+        'Menyusun langkah penyelesaian bareng-bareng',
+        'Menjaga kerahasiaan cerita kita',
+        'Merujuk ke psikolog atau psikiater kalau masalahnya sudah di luar kemampuannya'
+      ],
+      kapanKeKonselor: [
+        'Stres sekolah atau kuliah',
+        'Bingung memilih jurusan atau karier',
+        'Ribut sama teman, pacar, atau keluarga',
+        'Masalah sama orang tua atau pola asuh',
+        'Kurang percaya diri atau susah mengungkapkan perasaan',
+        'Pengin cerita ke orang yang nggak menghakimi'
+      ],
+      rujukanLain: [
+        {
+          kondisi: 'Pikiran negatif terus-terusan, susah makan/tidur lebih dari 2 minggu, trauma, atau sering panik',
+          tujuan: 'Psikolog',
+          targetFilter: 'Psikolog'
+        },
+        {
+          kondisi: 'Depresi berat, cemas berlebihan, bipolar, butuh obat, atau mulai kepikiran menyakiti diri',
+          tujuan: 'Psikiater',
+          targetFilter: 'Psikiater'
+        },
+        {
+          kondisi: 'Sudah ada dorongan atau rencana buat menyakiti diri sendiri',
+          tujuan: 'Hubungi 119 / IGD Terdekat',
+          targetFilter: null
+        }
+      ],
+      infoGuruBK: 'Guru BK di sekolah juga termasuk konselor, lho! Jadi buat kamu yang masih sekolah bisa mulai dari situ. Layanannya gratis, dan pas banget buat masalah belajar, pertemanan, sama bingung milih jurusan. Pilih Guru BK yang paling kamu percaya, dan kamu bisa minta waktu ngobrol berdua saja. Ke ruang BK itu bukan berarti kita anak bermasalah, ya.',
+      places: [
+        {
+          name: 'Puspaga (Pusat Pembelajaran Keluarga) Kota Bandung',
+          address: 'Jl. Ibrahim Adjie No. 84, Kebon Waru, Kec. Batununggal, Kota Bandung',
+          cost: 'Layanan pemerintah, biasanya gratis (konfirmasi dulu ke petugas)',
+          contact: 'Datang langsung ke kantor Puspaga Kota Bandung',
+          desc: 'Fokus pada konseling keluarga. Kasus yang paling sering ditangani seputar anak, remaja, pola asuh, dan masalah rumah tangga.',
+          cocokUntuk: 'Konflik sama orang tua, masalah remaja, pola asuh, dan keharmonisan keluarga'
+        },
+        {
+          name: 'UPTD PPA DP3A Kota Bandung',
+          address: 'Jl. Tera, Kota Bandung',
+          cost: 'Layanan pemerintah (Gratis)',
+          contact: 'WhatsApp: 0813-3330-1219 • Aplikasi SAPA 129 • Datang langsung',
+          desc: 'Menyediakan layanan pengaduan, penjangkauan korban, pendampingan, mediasi, sampai penampungan sementara (rumah aman).',
+          cocokUntuk: 'Korban kekerasan, pelecehan, atau KDRT (perempuan dan anak)'
+        },
+        {
+          name: 'Layanan Konseling Kampus (Untuk Mahasiswa)',
+          address: 'Telkom University: Pelampong Building, Jl. Telekomunikasi, Terusan Buah Batu, Bandung 40257 • BINUS @Bandung: Layanan SADC (Student Advisory Development Center)',
+          cost: 'BINUS @Bandung gratis untuk mahasiswa aktif. Kampus lain biasanya punya layanan serupa—coba tanya ke bagian kemahasiswaan.',
+          contact: 'Hubungi unit kemahasiswaan atau layanan konseling kampus masing-masing',
+          desc: 'Fasilitas pendampingan psikologis dan akademik yang disediakan kampus untuk membantu mahasiswa beradaptasi dan menyelesaikan hambatan kuliah.',
+          cocokUntuk: 'Stres kuliah, susah adaptasi, masalah akademik, dan pertemanan'
+        },
+        {
+          name: 'Biro Konseling Edupotensia Foundation (Swasta)',
+          address: 'Bandung (alamat lengkap dan tarif bisa ditanyakan lewat media sosial resminya)',
+          cost: 'Berbayar per sesi (durasi sekitar 60 menit; tarif tanya langsung ke admin)',
+          contact: 'Media sosial resmi Edupotensia Foundation',
+          desc: 'Ditangani oleh konselor profesional lulusan Bimbingan dan Konseling (BK) dengan pendekatan CBT, SFBT, dan life coaching.',
+          cocokUntuk: 'Masalah pribadi, pengembangan diri, dan saat bingung menentukan arah hidup'
+        }
+      ],
+      kisaranBiaya: 'Guru BK, Puspaga, UPTD PPA, dan konseling kampus umumnya gratis. Untuk biro konseling swasta, biasanya dihitung per sesi sekitar 60 menit (tarif bisa ditanyakan langsung ke admin).',
+      tips: 'Mulai saja dari layanan yang gratis dulu (Guru BK, Puspaga, atau konseling kampus). Kalau sudah 2–3 sesi belum terasa membantu, atau keluhannya makin berat, lanjut ke psikolog atau psikiater ya.'
+    };
+
+    /* --- DATA LENGKAP PSIKOLOG --- */
+    const PSIKOLOG_DATA = {
+      intro: 'Berbeda dengan konseling atau bimbingan ringan biasa, kamu membutuhkan pendampingan Psikolog berlisensi ketika kondisi psikologis memerlukan asesmen mendalam, diagnosis klinis, maupun psikoterapi terstruktur.',
+      tandaUmum: [
+        {
+          num: '01',
+          title: 'Terjebak Pola Pikir Negatif & Pesimisme Kronis (> 2 Minggu)',
+          desc: 'Terus-menerus terjebak dalam siklus pikiran negatif berulang (rumination), menyalahkan diri sendiri secara ekstrem, atau merasakan pesimisme dan keputusasaan mendalam yang bertahan lebih dari dua minggu.'
+        },
+        {
+          num: '02',
+          title: 'Gangguan Pola Makan & Tidur Berturut-turut',
+          desc: 'Mengalami perubahan perilaku makan (kehilangan nafsu makan drastis, menolak makan, memuntahkan makanan, atau makan berlebih akibat tekanan emosi) serta gangguan tidur selama dua minggu berturut-turut.'
+        },
+        {
+          num: '03',
+          title: 'Trauma Masa Lalu & Reaksi Ketakutan Berlebih',
+          desc: 'Sulit lepas dari luka batin atau ingatan traumatis yang memicu kilas balik (flashback), mimpi buruk, atau reaksi panik saat bertemu pemicu tertentu (trigger).'
+        },
+        {
+          num: '04',
+          title: 'Gangguan Psikosomatis & Disregulasi Emosi',
+          desc: 'Sering mengalami keluhan fisik berulang tanpa sebab medis yang jelas (jantung berdebar, sesak napas, nyeri lambung, migrain) disertai kesulitan mengendalikan ledakan emosi atau amarah.'
+        },
+        {
+          num: '05',
+          title: 'Menurunnya Fungsi Diri & Pikiran tentang Kematian',
+          desc: 'Tidak lagi mampu menjalankan tanggung jawab harian akibat kelelahan mental berat, menarik diri secara ekstrem dari lingkungan sosial, hingga muncul perasaan hidup tidak bermakna atau pikiran pasif tentang kematian. (Catatan: Jika sudah muncul dorongan atau rencana aktif menyakiti diri, segera hubungi layanan darurat 119 atau kunjungi IGD/Psikiater terdekat).'
+        },
+        {
+          num: '06',
+          title: 'Kebutuhan Asesmen & Psikotes Terstandarisasi',
+          desc: 'Membutuhkan pemeriksaan psikologis resmi untuk pemetaan kecerdasan (tes IQ), profil kepribadian, evaluasi tumbuh kembang, maupun deteksi dini gangguan belajar atau perilaku.'
+        }
+      ],
+      tandaUsia: {
+        'Anak-Anak': {
+          subtitle: 'Memerlukan observasi perilaku klinis, asesmen tumbuh kembang, atau intervensi psikolog anak:',
+          items: [
+            { label: 'Hambatan Perkembangan & Komunikasi', detail: 'Keterlambatan bicara (speech delay), minim kontak mata, sulit merespons panggilan, atau hambatan interaksi sosial dengan teman sebaya.' },
+            { label: 'Gangguan Fokus & Hiperaktivitas', detail: 'Sangat sulit memusatkan perhatian, tidak bisa duduk tenang dalam waktu lama, atau bertindak impulsif tanpa memikirkan bahaya (indikasi awal ADHD).' },
+            { label: 'Kesulitan Belajar Spesifik', detail: 'Kesulitan ekstrem dalam membaca (disleksia), menulis (disgrafia), atau berhitung (diskalkulia) meski kecerdasan umumnya terlihat normal.' },
+            { label: 'Gangguan Perilaku & Agresivitas', detail: 'Sering tantrum hebat melebihi batas usianya, bersikap agresif (memukul, menggigit, merusak barang), atau menolak aturan secara ekstrem.' },
+            { label: 'Kecemasan Berpisah & Regresi', detail: 'Takut berpisah secara ekstrem dengan orang tua saat sekolah, sering mimpi buruk, atau mengalami kemunduran perilaku seperti kembali mengompol dan mengisap jempol.' },
+            { label: 'Kebutuhan Evaluasi Psikologis', detail: 'Membutuhkan tes IQ resmi, tes kesiapan masuk sekolah dasar (SD), atau deteksi dini anak berkebutuhan khusus.' }
+          ]
+        },
+        'Remaja': {
+          subtitle: 'Memerlukan asesmen psikologis atau psikoterapi klinis untuk stabilitas emosi, identitas diri, dan perilaku:',
+          items: [
+            { label: 'Gangguan Pola Makan & Citra Tubuh', detail: 'Mengalami gangguan makan selama dua minggu berturut-turut, terobsesi berlebihan pada berat badan, atau memiliki pandangan negatif ekstrem terhadap tubuh sendiri (body dysmorphia).' },
+            { label: 'Pola Pikir Negatif & Pesimisme Akut', detail: 'Terjebak dalam rasa rendah diri (insecure) berat, merasa tidak berharga, pesimis terhadap masa depan, atau kehilangan minat pada hampir semua aktivitas.' },
+            { label: 'Disregulasi Emosi & Isolasi Sosial', detail: 'Perubahan suasana hati (mood swing) sangat tajam, ledakan amarah tak terkendali, atau mengurung diri di kamar hingga memutus komunikasi dengan keluarga.' },
+            { label: 'Trauma Perundungan & Tekanan Akademik', detail: 'Mengalami trauma psikologis akibat bullying, fobia sosial saat berada di keramaian, atau serangan panik menjelang ujian.' },
+            { label: 'Adiksi & Perilaku Berisiko', detail: 'Kecanduan gawai atau gim daring hingga merusak jam tidur dan prestasi sekolah, perilaku impulsif, hingga muncul pikiran pasif tentang kematian.' },
+            { label: 'Asesmen Potensi & Penjurusan', detail: 'Membutuhkan psikotes terstandarisasi untuk pemetaan kecerdasan, minat bakat, dan penjurusan studi lanjut.' }
+          ]
+        },
+        'Dewasa': {
+          subtitle: 'Memerlukan diagnosis psikologis, psikoterapi klinis, maupun terapi relasi dan keluarga:',
+          items: [
+            { label: 'Pola Pikir Negatif Berulang & Pesimisme Kronis', detail: 'Terjebak dalam siklus overthinking negatif (rumination), terus-menerus menyalahkan diri sendiri, atau merasakan keputusasaan berkepanjangan.' },
+            { label: 'Kelelahan Mental Berat (Severe Burnout)', detail: 'Merasa terkuras secara emosional dan fisik akibat tekanan kerja, mati rasa secara emosional (emotional numbness), dan sinis terhadap pekerjaan maupun lingkungan.' },
+            { label: 'Gangguan Kecemasan & Serangan Panik', detail: 'Mengalami kecemasan menyeluruh yang sulit dikendalikan, serangan panik mendadak (jantung berdebar, keringat dingin, rasa seperti tercekik), atau fobia spesifik yang membatasi aktivitas.' },
+            { label: 'Trauma Masa Lalu & Duka Kompleks', detail: 'Mengalami kilas balik memori buruk (flashback), trauma masa kecil yang belum pulih (inner child wounds), atau kesedihan mendalam berkepanjangan akibat kehilangan orang tercinta.' },
+            { label: 'Gangguan Makan & Tidur Klinis', detail: 'Mengalami gangguan pola makan lebih dari dua minggu akibat stres emosional (emotional eating atau kehilangan nafsu makan) disertai insomnia kronis.' },
+            { label: 'Konflik Relasi, Pernikahan & Pengasuhan', detail: 'Pertengkaran berulang dengan pasangan yang membutuhkan terapi pernikahan, kelelahan ekstrem dalam mengasuh anak (parental burnout), atau asesmen kesiapan pra-nikah.' }
+          ]
+        }
+      },
+      offlineList: [
+        {
+          name: 'Edelweiss Hospital Bandung',
+          address: 'Jl. Soekarno-Hatta No. 550, Sekejati, Kec. Buahbatu, Kota Bandung, Jawa Barat 40286',
+          price: 'Rp350.000 – Rp600.000 / sesi (durasi 45–60 menit)',
+          contact: 'WhatsApp: +62 888-6023-000',
+          note: 'Wajib membayar deposit awal sebesar Rp450.000 saat registrasi ulang di rumah sakit (sisa deposit dikembalikan jika biaya akhir lebih rendah).'
+        },
+        {
+          name: "Psikolog Bandung d'Fun Station",
+          address: 'Istana Pasteur Regency, Ruko Jl. Tol Pasteur No. 51 Blk CRA, Sukaraja, Kec. Cicendo, Kota Bandung 40175',
+          price: 'Rp200.000 – Rp225.000 / sesi',
+          contact: 'Web: dfunstation.com • IG: @dfunstation • WA: +62 859-5600-0087',
+          note: 'Cocok untuk konseling individu, anak, remaja, dewasa, maupun keluarga.'
+        },
+        {
+          name: 'Klinik Utama Tanaya',
+          address: 'Jl. Sulanjana No. 11A, Tamansari, Kec. Bandung Wetan, Kota Bandung 40116',
+          price: 'Rp275.000 – Rp310.000 / sesi',
+          contact: 'IG: @klinikutamatanaya • WA: +62 812-1459-5170',
+          note: 'Menyediakan layanan khusus psikolog klinis (konseling mendalam, psikoterapi, dan asesmen tes kepribadian/minat bakat). Disarankan reservasi lebih dulu via WhatsApp admin.'
+        },
+        {
+          name: 'Triumi (Magnaka Psikologi)',
+          address: 'Gang Wirabrata Jl. Pasundan No. 49, Balonggede, Kec. Regol, Kota Bandung 40251',
+          price: 'Rp325.000 / sesi (durasi 1 jam)',
+          contact: 'Web: psikologbandung.com • WA: +62 811-1510-900',
+          note: 'Jadwal layanan buka Senin–Sabtu pukul 09.00–17.00 WIB.'
+        },
+        {
+          name: 'PIP Unpad (PT Pijar Integra Psikologi Unpad)',
+          address: 'Jl. Ir. H. Juanda No. 438-B, Dago, Kec. Coblong, Kota Bandung 40135',
+          price: 'Mulai dari Rp350.000/jam hingga kisaran Rp750.000 – Rp1.000.000+ / sesi (menyesuaikan jenis layanan & senioritas psikolog)',
+          contact: 'WA: +62 811-2074-388 (khusus chat) • IG: @pip.unpad',
+          note: 'Badan usaha milik Universitas Padjadjaran dengan tim dosen dan praktisi psikolog berpengalaman (anak, remaja, dewasa, pasangan, lansia). Wajib buat janji temu pada hari kerja (Senin–Jumat pukul 09.00–16.00 WIB).'
+        },
+        {
+          name: 'Ibunda.id (Counseling Corner Bandung)',
+          address: 'Jl. Tanjungsari Asri Tengah No. 4, Antapani Wetan, Kec. Antapani, Kota Bandung 40291',
+          price: 'Mulai dari Rp420.000 / sesi',
+          contact: 'Web/App: ibunda.id / WellMe • IG: @ibunda.id',
+          note: 'Wajib reservasi jadwal dulu sebelum datang. Selain konseling individu (60 menit), tersedia konseling pasangan, keluarga, hipnoterapi, hingga paket Mental Health Check-Up (MHCU).'
+        },
+        {
+          name: 'Anahata Layanan Psikologi',
+          address: 'Jl. Srisuci No. 22, Ancol, Kec. Regol, Kota Bandung 40254 (cabang: Jl. Sariasih II No. 22, Sarijadi)',
+          price: 'Mulai dari Rp450.000 / sesi (durasi 1 jam)',
+          contact: 'Web: anahatapsikologi.com • WA: +62 821-3868-1319 • IG: @anahata.psikologi',
+          note: 'Menyediakan ruang refleksi untuk konsultasi individu dewasa, pasangan (durasi total 2 jam), remaja, serta tumbuh kembang anak.'
+        },
+        {
+          name: 'Rumah Sakit Kartini Bandung (Poli Psikologi)',
+          address: 'Jl. Pahlawan No. 48, Neglasari, Kec. Cibeunying Kaler, Kota Bandung 40124',
+          price: 'Mulai dari Rp156.000 / sesi',
+          contact: 'Telp/WA RS: +62 878-1988-1010 • Booking: Alodokter',
+          note: 'Alternatif fasilitas kesehatan swasta dengan biaya tatap muka yang relatif terjangkau di Bandung Utara/Tengah. Sebaiknya konfirmasi jadwal dulu via WhatsApp RS atau Alodokter.'
+        },
+        {
+          name: 'Poli Psikologi Puskesmas Kota Bandung (Opsi Gratis / Terjangkau)',
+          address: 'Tersedia di jaringan Puskesmas Kota Bandung (12 lokasi aktif di bawah)',
+          price: 'Gratis (dengan BPJS Kesehatan) • Rp15.000 / sesi (pasien umum, durasi 30–40 menit)',
+          contact: 'Datang langsung ke loket pendaftaran Puskesmas setempat atau lewat aplikasi Mobile JKN',
+          note: 'Sangat direkomendasikan bagi pelajar atau mahasiswa dengan anggaran terbatas.',
+          puskesmasList: [
+            'UPTD Puskesmas Garuda — Jl. Dadali No. 81, Garuda, Kec. Andir, Kota Bandung 40184',
+            'UPT Puskesmas Ibrahim Adjie — Jl. Ibrahim Adjie No. 88, Kebonwaru, Kec. Batununggal, Kota Bandung 40272',
+            'UPTD Puskesmas Padasuka — Jl. Padasuka No. 3, Padasuka, Kec. Cibeunying Kidul, Kota Bandung 40125',
+            'UPT Puskesmas Puter — Jl. Puter No. 3, Sadang Serang, Kec. Coblong, Kota Bandung 40133',
+            'UPT Puskesmas Sukarasa — Jl. Gegerkalong Hilir No. 157, Sukarasa, Kec. Sukasari, Kota Bandung 40152',
+            'UPTD Puskesmas Salam — Jl. Salam No. 27, Cihapit, Kec. Bandung Wetan, Kota Bandung 40114',
+            'UPT Puskesmas Pasirkaliki — Jl. Pasir Kaliki No. 188, Pasir Kaliki, Kec. Cicendo, Kota Bandung 40171',
+            'UPTD Puskesmas Cibuntu — Jl. Syahbandar No. 1, Caringin, Kec. Bandung Kulon, Kota Bandung 40212',
+            'Puskesmas Kopo — Jl. Raya Kopo No. 367, Kb. Lega, Kec. Bojongloa Kidul, Kota Bandung 40233',
+            'Puskesmas Babakan Sari — Jl. Babakan Sari No. 183, Babakan Sari, Kec. Kiaracondong, Kota Bandung 40283',
+            'UPTD Puskesmas Cipamokolan — Jl. Cipamokolan No. 71, Cipamokolan, Kec. Rancasari, Kota Bandung 40292',
+            'Puskesmas Cipadung — Jl. Cigagak Cipadung No. 1, Cipadung, Kec. Cibiru, Kota Bandung 40615'
+          ]
+        }
+      ],
+      onlineList: [
+        {
+          name: 'Rumah Cahaya (@inforumahcahaya)',
+          method: 'Konseling online via voice call, video call, dan Zoom dengan psikolog klinis',
+          price: 'Gratis (kuota antrean terbatas) atau sistem donasi/subsidi silang (tarif dikonfirmasi lewat WA admin)',
+          contact: 'IG: @inforumahcahaya • Web: rumahcahaya.id • WA: +62 858-8257-6631',
+          note: 'Cocok untuk pelajar atau mahasiswa yang membutuhkan akses konseling jarak jauh dengan biaya ringan atau gratis.'
+        },
+        {
+          name: 'Rumah Konsul (@rumahkonsul_id)',
+          method: 'Konseling psikologi online (individu, pasangan, dan keluarga) bersama psikolog berlisensi',
+          price: 'Wajib tahap asesmen awal Rp220.000 (di luar biaya sesi utama), dilanjutkan sesi konseling (tarif dikonfirmasi setelah asesmen)',
+          contact: 'IG: @rumahkonsul_id • Web: rumahkonsul.com • WA: +62 813-2227-6321',
+          note: 'Pendampingan dilakukan bertahap mulai dari pemetaan masalah awal agar penanganan lebih terarah.'
+        },
+        {
+          name: 'Bicarakan.id',
+          method: 'Konseling online praktis lewat aplikasi maupun website via voice call atau video call (WhatsApp / Google Meet)',
+          price: 'Rp249.000 – Rp349.000 / sesi (durasi 1 jam)',
+          contact: 'Web & Aplikasi: bicarakan.id',
+          note: 'Jadwal konseling sangat fleksibel (bisa dapat jadwal cepat kurang dari 24 jam) dan tersedia fitur ganti psikolog dengan mudah.'
+        },
+        {
+          name: 'Halodoc (Kategori Psikolog Klinis)',
+          method: 'Konseling online langsung di aplikasi lewat chat, voice call, atau video call (durasi 30–60 menit)',
+          price: 'Rp50.000 – Rp250.000 / sesi (tergantung profil dan pengalaman psikolog)',
+          contact: 'Aplikasi Halodoc (Android/iOS) • Web: halodoc.com',
+          note: 'Bebas memilih profil psikolog sendiri sesuai topik masalah dan anggaran. Tersedia 24 jam tanpa perlu antre lama.'
+        },
+        {
+          name: 'Mindset Psikologi',
+          method: 'Konseling online via chat atau video call bersama psikolog klinis berlisensi (15–60 menit)',
+          price: 'Rp99.000 (konsultasi kilat 15 menit) • Mulai Rp150.000 (chat 30 menit) • Mulai Rp315.000 / sesi (video call 60 menit)',
+          contact: 'App: Mindset Psychology • Web: mindsetpsychology.co.id • WA: +62 819-9269-7548 / +62 822-3070-9248',
+          note: 'Tarif transparan sejak awal, tersedia layanan chat instan tanpa tunggu lama, serta fasilitas ganti psikolog gratis jika kurang cocok di sesi pertama.'
+        },
+        {
+          name: "d'Fun Station (@dfunstation)",
+          method: 'Konseling online via Google Meet atau fitur konsultasi langsung di aplikasi d\'Fun Station bersama psikolog klinis',
+          price: 'Mulai dari Rp120.000 / sesi (tersedia juga kuota sesi konsultasi gratis terbatas lewat aplikasi)',
+          contact: 'IG: @dfunstation • Web/App: dfunstation.com • WA: +62 859-5600-0087',
+          note: 'Buka setiap hari pukul 08.30–16.30 WIB dan cocok untuk kebutuhan konseling individu, anak, remaja, maupun keluarga.'
+        },
+        {
+          name: 'Klinik Utama Tanaya (@klinikutamatanaya)',
+          method: 'Konseling psikologi klinis online (tersedia juga opsi tatap muka di Bandung)',
+          price: 'Mulai dari Rp250.000 – Rp300.000 / sesi (menyesuaikan pilihan psikolog & durasi)',
+          contact: 'IG: @klinikutamatanaya • Web: kliniktanaya.id • WA: +62 812-1459-5170',
+          note: 'Fokus pada sesi konseling mendalam, psikoterapi, dan asesmen psikologis (tes kepribadian/minat bakat). Reservasi lebih dulu via WA admin.'
+        },
+        {
+          name: 'Triumi (Magnaka Psikologi)',
+          method: 'Konseling psikologi online via panggilan video (Zoom / Google Meet) atau telepon sesuai kesepakatan admin',
+          price: 'Mulai dari Rp250.000 – Rp349.000 / sesi (durasi 1 jam)',
+          contact: 'IG: @magnakapsikologi • Web: psikologbandung.com • WA: +62 811-1510-900',
+          note: 'Buka setiap hari pukul 09.00–17.00 WIB (khusus Senin & Kamis layanan konsultasi pribadi tersedia hingga pukul 21.00 WIB).'
+        },
+        {
+          name: 'Ibunda.id (Counseling Corner)',
+          method: 'Konseling online (individu durasi 60 menit/sesi, pasangan, hingga keluarga) via aplikasi atau website Ibunda.id',
+          price: 'Mulai dari Rp179.000 – Rp200.000 / sesi',
+          contact: 'IG: @ibunda.id • Web/App: ibunda.id / WellMe',
+          note: 'Profil, fokus keahlian, serta jadwal kosong masing-masing psikolog bisa dilihat secara transparan sebelum memesan.'
+        }
+      ]
+    };
+
+    /* --- DATA LENGKAP PSIKIATER --- */
+    const PSIKIATER_DATA = {
+      apaItu: 'Psikiater adalah dokter spesialis kedokteran jiwa (Sp.KJ) yang memiliki keahlian dalam memeriksa, mendiagnosis, menangani, dan mencegah gangguan kesehatan mental. Karena memiliki latar belakang pendidikan kedokteran, psikiater dapat memberikan penanganan medis, termasuk meresepkan obat apabila diperlukan.',
+      kapanKePsikiater: 'Psikiater menjadi pilihan yang tepat ketika seseorang mengalami masalah kesehatan mental yang cukup berat, berlangsung lama, atau sudah mengganggu kehidupan sehari-hari—seperti depresi, gangguan kecemasan, gangguan bipolar, gangguan tidur berat, hingga risiko menyakiti diri.',
+      offlineRS: [
+        {
+          name: 'RS Maranatha',
+          address: 'Jl. Taman Kopo Indah III Blok H No. 1, Margaasih, Kabupaten Bandung',
+          phone: '(022) 86011220 / 0813-1448-688',
+          price: 'Mulai sekitar Rp286.000'
+        },
+        {
+          name: 'RS Immanuel Bandung',
+          address: 'Jl. Raya Kopo No. 161, Situsaeur, Bojongloa Kidul, Kota Bandung',
+          phone: '(022) 5201656 / 0812-9770-7779',
+          price: 'Mulai sekitar Rp240.000'
+        },
+        {
+          name: 'Mayapada Hospital Bandung',
+          address: 'Jl. Terusan Buah Batu No. 5, Batununggal, Bandung Kidul, Kota Bandung',
+          phone: '150770 / 0817-1715-0770',
+          price: 'Mulai sekitar Rp325.000'
+        },
+        {
+          name: 'RS Hermina Arcamanik',
+          address: 'Jl. A.H. Nasution No. 50, Antapani Wetan, Kota Bandung',
+          phone: '1500488 / 0813-1642-469',
+          price: 'Mulai sekitar Rp321.000'
+        },
+        {
+          name: 'RS Jiwa Provinsi Jawa Barat',
+          address: 'Jl. Kolonel Masturi KM 7, Jambudipa, Cisarua, Kabupaten Bandung Barat',
+          phone: '(022) 2700260 / 0812-2129-2020 (Konsultasi Jiwa Online)',
+          price: 'Mulai sekitar Rp125.000 per sesi (BPJS dapat digunakan sesuai persyaratan dan alur rujukan)'
+        }
+      ],
+      onlineApps: [
+        {
+          name: 'Halodoc',
+          website: 'halodoc.com',
+          service: 'Konsultasi dengan dokter spesialis kejiwaan (Sp.KJ) melalui chat, panggilan suara, dan video call.',
+          price: 'Pada daftar dokter yang ditampilkan, tarif mulai Rp70.000 (harga berbeda tergantung dokter).'
+        },
+        {
+          name: 'Alodokter',
+          website: 'alodokter.com',
+          service: 'Konsultasi kesehatan melalui platform digital lewat fitur tanya dokter spesialis kedokteran jiwa (Sp.KJ).',
+          price: 'Tarif bergantung pada dokter dan jenis layanan yang dipilih.'
+        },
+        {
+          name: 'Tenangkan.id',
+          website: 'tenangkan.id',
+          service: 'Konsultasi dengan psikiater Sp.KJ melalui video call WhatsApp atau Zoom.',
+          price: 'Lite Rp125.000 (10 menit) dan Advance Rp250.000 (30 menit).'
+        }
+      ]
+    };
+
+    /* --- DATA LENGKAP TEMPAT HEALING (22 TEMPAT) --- */
+    const HEALING_PLACES = [
+      {
+        id: 'baksil',
+        name: 'Hutan Kota Babakan Siliwangi (Baksil)',
+        area: 'Bandung Pusat',
+        tag: 'Alam & Forest Walk',
+        location: 'Jl. Tamansari No. 73, Coblong, Kota Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/KyKAJps2WMyFV1aJ7',
+        budget: 'Gratis! (Cuma parkir Rp2.000–Rp5.000)',
+        vibes: 'Hutan adem di tengah kota dengan jembatan kayu (forest walk) yang rindang. Begitu masuk sini, bising klakson langsung auto-mute.',
+        cocokBuat: 'Main character walk sambil dengerin playlist favorit, atau deep talk berdua bareng bestie di bangku kayu pinggir jalur.',
+        accent: 'mint',
+        sceneType: 'forest'
+      },
+      {
+        id: 'kiara-artha',
+        name: 'Kiara Artha Park',
+        area: 'Bandung Pusat',
+        tag: 'Taman Kota & Danau',
+        location: 'Jl. Banten, Kebonwaru, Batununggal, Kota Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/8uqviMMXZwnvxEyi6',
+        budget: 'Tiket masuk Rp10.000 (weekday) / Rp15.000 (weekend)',
+        vibes: 'Taman kota yang luas, bersih, dan estetik dengan danau buatan serta air mancur menari saat malam.',
+        cocokBuat: 'Sewa sepeda atau skuter listrik biar stres hilang sambil ketawa bareng teman, duduk santai pinggir danau pas sore, dan jajan hemat.',
+        accent: 'blue',
+        sceneType: 'pond'
+      },
+      {
+        id: 'the-room-19',
+        name: 'The Room 19 - Independent Library',
+        area: 'Bandung Pusat',
+        tag: 'Perpustakaan & Me-Time',
+        location: 'Jl. Dipati Ukur No. 66C, Lebakgede, Coblong, Kota Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/ZKcL63q9ZhZWQ5mm6',
+        budget: 'Mulai Rp25.000–Rp45.000 (sistem paket baca + gratis teh/camilan)',
+        vibes: 'Perpustakaan independen sekaligus ruang baca yang sunyi, adem, dan estetik. Ada sofa empuk, koleksi buku bestseller rapi, sampai kertas gambar dan alat tulis buat corat-coret (doodling).',
+        cocokBuat: 'Silent me-time total saat kepala lagi berisik banget, baca buku dengan fokus, atau journaling sambil menyeruput teh hangat.',
+        accent: 'blue',
+        sceneType: 'library'
+      },
+      {
+        id: 'teras-pagi',
+        name: 'Teras Pagi & Encykoffee (Taman Bacaan Hendra)',
+        area: 'Bandung Pusat',
+        tag: 'Kafe & Taman Baca',
+        location: 'Jl. Sabang No. 28, Cihapit, Kec. Bandung Wetan, Kota Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/v3uVCGp6nF4jwpQo8',
+        budget: 'Mulai Rp20.000–Rp45.000',
+        vibes: 'Walau dekat area Cihapit yang ramai, begitu masuk suasananya langsung tenang dan homey. Menyatu dengan perpustakaan legendaris berisi puluhan ribu koleksi buku dan komik vintage yang bebas dibaca di tempat.',
+        cocokBuat: 'Baca novel atau komik jadul dengan tenang tanpa terganggu keramaian luar.',
+        accent: 'terracotta',
+        sceneType: 'cafe'
+      },
+      {
+        id: 'blessings-art',
+        name: 'Blessings Art Space & Eatery',
+        area: 'Bandung Pusat',
+        tag: 'Active Healing & Kerajinan',
+        location: 'Ruko Paskal Hyper Square Blok D-02, Jl. Pasir Kaliki, Andir, Kota Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/fjp9YSPbsKVxLGuk6',
+        budget: 'Mulai Rp40.000–Rp75.000 (tergantung makanan/kit kerajinan)',
+        vibes: 'Kafe homey yang menyatu dengan toko alat seni (scrapbooking, merajut, melukis, hingga pottery) serta galeri karya seni.',
+        cocokBuat: 'Menyalurkan stres lewat aktivitas tangan (crafting), main board game, atau journaling estetik biar otak berhenti overthinking.',
+        accent: 'yellow',
+        sceneType: 'cafe'
+      },
+      {
+        id: 'kintsugi-coffee',
+        name: 'Kintsugi Teras Abadi (Kintsugi Coffee)',
+        area: 'Bandung Pusat',
+        tag: 'Kafe Piknik & Pet-Friendly',
+        location: 'Jl. Abadi Raya No. 38, Komp. KPAD Gegerkalong, Kec. Sukajadi, Kota Bandung (cabang kedua: Jl. Kemuning, Bandung)',
+        mapsUrl: 'https://maps.app.goo.gl/951aEPaDwC7B2qAx7',
+        budget: 'Kisaran Rp25.000–Rp50.000/orang (kopi mulai Rp22.000-an, makanan Rp23.000–Rp38.000)',
+        vibes: 'Kafe tersembunyi di dalam perumahan yang sepi dan jauh dari bising lalu lintas, dengan halaman rumput adem, konsep semi-outdoor ala piknik bernuansa Jepang minimalis, serta area pet-friendly.',
+        cocokBuat: 'Me-time ngopi pagi dengan udara sejuk, WFC tenang dengan Wi-Fi kencang dan banyak colokan, atau piknik santai di taman rumput bareng teman maupun anabul.',
+        accent: 'mint',
+        sceneType: 'cafe'
+      },
+      {
+        id: 'tahura',
+        name: 'Taman Hutan Raya Ir. H. Djuanda (Tahura)',
+        area: 'Bandung Utara',
+        tag: 'Alam & Eksplorasi',
+        location: 'Jl. Ir. H. Juanda No. 99, Ciburial, Dago Atas',
+        mapsUrl: 'https://maps.app.goo.gl/KeWcvdS3M1Dpw2DD6',
+        budget: 'Tiket masuk sekitar Rp17.000',
+        vibes: 'Kawasan hutan pinus super luas dan dingin, lengkap dengan penangkaran rusa serta Gua Belanda dan Gua Jepang.',
+        cocokBuat: 'Detoks layar HP, jalan santai bareng teman, piknik bawa bekal dari rumah, dan eksplorasi gua biar fokus teralihkan dari beban tugas.',
+        accent: 'mint',
+        sceneType: 'forest'
+      },
+      {
+        id: 'kineruku',
+        name: 'Kineruku',
+        area: 'Bandung Utara',
+        tag: 'Kafe Me-Time & Baca Buku',
+        location: 'Jl. Hegarmanah No. 52, Cidadap, Kota Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/7KZaJ5vSWHr3cF1R7',
+        budget: 'Mulai Rp20.000–Rp45.000',
+        vibes: 'Book cafe legendaris berkonsep rumah tua asri dengan halaman belakang teduh serta ribuan koleksi buku, majalah, dan CD musik.',
+        cocokBuat: 'Baca buku di teras belakang sambil dengerin suara alam, dengerin musik pakai headset, dan menjauh sejenak dari suara klakson kota.',
+        accent: 'terracotta',
+        sceneType: 'library'
+      },
+      {
+        id: 'hidden-farm',
+        name: 'Hidden Farm Cafe',
+        area: 'Bandung Utara',
+        tag: 'Kafe Kucing & Melukis',
+        location: 'Jl. Bukit Pakar Utara No. 40, Ciburial, Dago Atas',
+        mapsUrl: 'https://maps.app.goo.gl/cR5TRkbjN8gCF6iS7',
+        budget: 'Mulai Rp25.000–Rp50.000',
+        vibes: 'Kafe sekaligus plantshop yang tersembunyi dan adem di kawasan Ciburial, lengkap dengan rak buku, painting kits, dan banyak kucing gemas berkeliaran.',
+        cocokBuat: 'Cat therapy (main sama kucing bikin stres turun!), melukis di kanvas kecil buat meluapkan emosi, atau duduk tenang sendirian.',
+        accent: 'yellow',
+        sceneType: 'cafe'
+      },
+      {
+        id: 'selasar-sunaryo',
+        name: 'Selasar Sunaryo Art Space',
+        area: 'Bandung Utara',
+        tag: 'Galeri Seni & Kontemplasi',
+        location: 'Jl. Bukit Pakar Timur No. 100, Ciburial, Kec. Cimenyan',
+        mapsUrl: 'https://maps.app.goo.gl/sTjMDR4JPmR29A9p7',
+        budget: 'Tiket pameran sekitar Rp25.000–Rp45.000 (area kafe & taman terbuka bisa dinikmati santai)',
+        vibes: 'Ruang pamer seni kontemporer di perbukitan Dago dengan arsitektur menenangkan, taman terbuka, dan kedai kopi yang damai.',
+        cocokBuat: 'Slow afternoon sambil melihat karya seni yang bikin pikiran lebih segar, duduk tenang di amfiteater terbuka, dan cari inspirasi baru.',
+        accent: 'blue',
+        sceneType: 'library'
+      },
+      {
+        id: 'batu-kuda',
+        name: 'Wisata Alam Batu Kuda Manglayang',
+        area: 'Bandung Timur',
+        tag: 'Alam & Hutan Pinus',
+        location: 'Cibiru Wetan, Kec. Cileunyi, Kabupaten Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/4mG8CayghzSsQwCb9',
+        budget: 'Tiket masuk sekitar Rp10.000–Rp15.000',
+        vibes: 'Hutan pinus alami di lereng Gunung Manglayang yang masih sepi dan asri. Suara angin yang menyapu daun pinus di sini jadi ASMR alami terbaik.',
+        cocokBuat: 'Pasang hammock di antara pohon pinus, tidur siang singkat, atau rehat seharian dari notifikasi grup.',
+        accent: 'mint',
+        sceneType: 'forest'
+      },
+      {
+        id: 'al-jabbar',
+        name: 'Masjid Raya Al Jabbar (Saat Jam Sepi / Pagi-Sore)',
+        area: 'Bandung Timur',
+        tag: 'Danau & Kontemplasi',
+        location: 'Jl. Cimencrang No. 14, Gedebage, Kota Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/ZUNZQnPqwdYm3BYo9',
+        budget: 'Gratis! (Cuma bayar parkir)',
+        vibes: 'Masjid terapung dengan danau luas yang memantulkan langit sore serta angin sepoi-sepoi yang lapang.',
+        cocokBuat: 'Duduk tenang di tepi danau luar saat jam tidak ramai, berdoa atau refleksi menenangkan hati, dan melepas beban pikiran yang terasa buntu.',
+        accent: 'blue',
+        sceneType: 'pond'
+      },
+      {
+        id: 'taman-sumringah',
+        name: 'Taman Sumringah (Summarecon Bandung)',
+        area: 'Bandung Timur',
+        tag: 'Ruang Terbuka Hijau',
+        location: 'Jl. Bulevar Summarecon Bandung, Rancabolang, Kec. Gedebage, Kota Bandung (seberang Summarecon Mall Bandung)',
+        mapsUrl: 'https://maps.app.goo.gl/EpDjERFNXhZWdsw79',
+        budget: 'Gratis! (Terbuka untuk umum, cukup bayar parkir)',
+        vibes: 'Ruang terbuka hijau modern yang rapi, bersih, dan lapang dengan danau buatan luas berlatar siluet pegunungan Bandung Timur serta deretan pohon rindang yang adem.',
+        cocokBuat: 'Me-time duduk tenang di bangku taman sambil baca buku atau dengar musik, jalan santai/jogging saat golden hour sore, dan melepas penat jauh dari keramaian jalan raya.',
+        accent: 'mint',
+        sceneType: 'pond'
+      },
+      {
+        id: 'taman-langit',
+        name: 'Taman Langit Pangalengan',
+        area: 'Bandung Selatan',
+        tag: 'Alam & View 360°',
+        location: 'Kp. Puncak Mulya, Sukaluyu, Pangalengan',
+        mapsUrl: 'https://maps.app.goo.gl/BHwTSQ8mzSgcjKtU7',
+        budget: 'Tiket masuk sekitar Rp10.000–Rp15.000',
+        vibes: 'Gardu pandang dan jembatan kayu panjang di atas bukit kebun teh dengan pemandangan alam luas yang cantik banget.',
+        cocokBuat: 'Self-reward setelah beres ujian, lihat lautan awan pagi hari, dan melepas emosi di ruang terbuka yang super luas.',
+        accent: 'mint',
+        sceneType: 'forest'
+      },
+      {
+        id: 'shamgar-coffee',
+        name: 'Shamgar Coffee & Books',
+        area: 'Bandung Selatan',
+        tag: 'Kafe Me-Time & Baca Buku',
+        location: 'Jl. Ciganitri Indah No. D7, Cipagalo, Kec. Bojongsoang, Kabupaten Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/XZvqsnVNyu1ocdu38',
+        budget: 'Mulai Rp25.000–Rp50.000',
+        vibes: 'Kafe buku yang tenang, homey, dan nyaman banget bahkan kalau kamu datang sendirian.',
+        cocokBuat: 'Me-time santai baca buku favorit sambil ngopi tanpa merasa canggung.',
+        accent: 'terracotta',
+        sceneType: 'library'
+      },
+      {
+        id: 'berg-puntang',
+        name: 'BERG Puntang',
+        area: 'Bandung Selatan',
+        tag: 'Kafe Hutan Pinus & Sungai',
+        location: 'Jl. Gunung Puntang, Pasirmulya, Kec. Banjaran, Kabupaten Bandung',
+        mapsUrl: 'https://maps.app.goo.gl/fouRRvf1pw8bDYEXA',
+        budget: 'Tiket masuk berlapis Rp35.000–Rp38.000/orang (kawasan Gunung Puntang Rp25.000–Rp28.000 + area BERG Rp10.000, belum parkir); menu kafe mulai Rp20.000–Rp50.000-an',
+        vibes: 'Kafe outdoor estetik di tengah hutan pinus yang rindang dengan udara pegunungan dingin, kabut tipis, aliran sungai jernih di samping area duduk, serta pemandangan ke reruntuhan bersejarah eks-Stasiun Radio Malabar.',
+        cocokBuat: 'Slow living ngopi pagi atau sore di alam terbuka, duduk berlama-lama menghirup udara hutan tanpa polusi, dan rehat bareng teman atau pasangan di hari kerja biar suasananya lebih sunyi.',
+        accent: 'mint',
+        sceneType: 'forest'
+      },
+      {
+        id: 'sunrise-cukul',
+        name: 'Sunrise Point Cukul',
+        area: 'Bandung Selatan',
+        tag: 'Kebun Teh & Golden Sunrise',
+        location: 'Jl. Cukul, Sukaluyu, Kec. Pangalengan, Kabupaten Bandung (1.600 mdpl)',
+        mapsUrl: 'https://maps.app.goo.gl/R9rjD3JCUfAswdqT6',
+        budget: 'Rp10.000 (hari kerja) – Rp15.000 (akhir pekan)/orang (parkir motor Rp5.000 / mobil Rp10.000–Rp15.000)',
+        vibes: 'Bukit pengamatan di atas hamparan kebun teh hijau yang luas dengan udara dingin menggigit, lautan kabut pagi di lembah, serta pemandangan golden sunrise keemasan di balik pegunungan.',
+        cocokBuat: 'Berburu matahari terbit sejak subuh (tiba sebelum pukul 05.00 WIB), menghangatkan badan sambil makan mi rebus dan kopi hangat di warung puncak, atau camping semalam.',
+        accent: 'yellow',
+        sceneType: 'forest'
+      },
+      {
+        id: 'gunung-putri',
+        name: 'Gunung Putri Lembang',
+        area: 'Bandung Barat & Cimahi',
+        tag: 'Alam & Trekking Ringan',
+        location: 'Jl. Gunung Putri No. 184, Jayagiri, Lembang, Bandung Barat',
+        mapsUrl: 'https://maps.app.goo.gl/meZbj7tQsHsmCfNRA',
+        budget: 'Tiket masuk sekitar Rp10.000–Rp15.000',
+        vibes: 'Bukit hutan pinus dengan jalur naik ke puncak yang ramah pemula (jalan santai 15–20 menit saja), tapi pemandangan dari atasnya juara!',
+        cocokBuat: 'Mengejar small wins (sampai puncak tanpa capek ekstrem bikin rasa percaya diri naik) dan berburu kabut pagi pas akhir pekan.',
+        accent: 'mint',
+        sceneType: 'forest'
+      },
+      {
+        id: 'sanghyang-heuleut',
+        name: 'Sanghyang Heuleut (Rajamandala – Cipatat)',
+        area: 'Bandung Barat & Cimahi',
+        tag: 'Alam & Petualangan',
+        location: 'Kp. Cipanas, Rajamandala Kulon, Kec. Cipatat, Bandung Barat',
+        mapsUrl: 'https://maps.app.goo.gl/LYbJGh2nEXsC8QC37',
+        budget: 'Tiket masuk sekitar Rp10.000–Rp15.000',
+        vibes: 'Danau tersembunyi berair hijau toska jernih yang dikelilingi tebing batu purba raksasa. Suasananya hening dan jauh dari keramaian.',
+        cocokBuat: 'Stress-relief trekking (jalan kaki ±30–40 menit ke lokasi bantu tubuh melepaskan hormon stres) dan menjauh sejenak dari bisingnya kota.',
+        accent: 'blue',
+        sceneType: 'pond'
+      },
+      {
+        id: 'tell-n-tails',
+        name: "Tell 'n Tails Dog Park & Cafe",
+        area: 'Bandung Barat & Cimahi',
+        tag: 'Taman & Kafe Khusus Anabul 🐾',
+        location: 'Jl. Puspa Cempaka Timur I, Graha Puspa Blok B2 No. 17A, Cikahuripan, Lembang, Bandung Barat',
+        mapsUrl: 'https://maps.app.goo.gl/qdLJfCPpMzJcdyD59',
+        budget: 'Mulai Rp30.000–Rp60.000 (pastikan bawa bukti vaksin anabul jika membawa hewan peliharaan)',
+        vibes: 'Taman bermain outdoor luas yang aman dan bersih khusus buat anabul lari-larian bebas, lengkap dengan kafe nyaman buat pemiliknya bersantai.',
+        cocokBuat: 'Pawrents yang pengin lihat anabulnya happy bermain tanpa tali kekang sambil kamu ngemil santai melepas penat.',
+        accent: 'yellow',
+        sceneType: 'cafe'
+      },
+      {
+        id: 'kiwari-library',
+        name: 'Kiwari Library & Coffee',
+        area: 'Bandung Barat & Cimahi',
+        tag: 'Kafe Me-Time & Baca Buku',
+        location: 'Jl. Terusan Agronomi, Tanimulya, Kec. Ngamprah, Kabupaten Bandung Barat',
+        mapsUrl: 'https://maps.app.goo.gl/JCV8JfMCEfKfspPD9',
+        budget: 'Mulai Rp15.000–Rp35.000',
+        vibes: 'Perpustakaan rumahan dan kedai kopi yang tenang banget, bebas asap rokok di area baca, dan punya koleksi novel lengkap.',
+        cocokBuat: 'Quality me-time sepulang kuliah/sekolah buat baca novel favorit, menyeruput matcha, dan rehat dari keramaian.',
+        accent: 'blue',
+        sceneType: 'library'
+      },
+      {
+        id: 'cafe-dpakar',
+        name: "Cafe D'Pakar",
+        area: 'Bandung Barat & Cimahi',
+        tag: 'Kafe Tebing & Lembah Pinus',
+        location: 'Jl. Dago Pakar Utara, Sekejolang, Ciburial, Kec. Cimenyan / Lembang, Kabupaten Bandung Barat',
+        mapsUrl: 'https://maps.app.goo.gl/RjWQo1gRHhAdZo9PA',
+        budget: 'Terjangkau! Kisaran Rp25.000–Rp50.000 per orang',
+        vibes: 'Kafe outdoor bernuansa alam di pinggir tebing dengan pemandangan langsung ke lembah hijau hutan pinus Tahura Djuanda, udara sejuk khas Dago Atas, dan suasana tenang (terutama di hari kerja atau pagi menjelang siang).',
+        cocokBuat: 'Me-time ngopi santai sambil menatap hamparan hutan hijau, melepas penat di akhir pekan tanpa perlu pergi jauh dari pusat kota Bandung, atau ngobrol hangat ditemani seblak, cireng, dan pisang goreng di udara dingin.',
+        accent: 'terracotta',
+        sceneType: 'forest'
+      }
+    ];
+
+    /* --- DATA LENGKAP REKOMENDASI BUKU --- */
+    const BOOKS = [
+      {
+        id: 'book-1',
+        title: 'The Let Them Theory',
+        author: 'Mel Robbins',
+        category: 'Pengembangan Diri',
+        bookType: 'Non-fiksi motivasional',
+        theme: 'Seni melepaskan kontrol atas tindakan orang lain di luar kendali kita dan memusatkan energi pada diri sendiri.',
+        synopsis: '“Let them” (biarkan mereka). Mel Robbins mengajak pembaca berhenti menghabiskan waktu dan emosi untuk mengatur, mengoreksi, atau mencemaskan perilaku orang lain di sekitar kita. Lewat contoh nyata yang lugas dan mudah dipahami, buku ini mengingatkan bahwa kita tidak punya kendali atas sikap orang lain, melainkan berkuasa penuh atas respons, batasan diri, dan ketenangan kita sendiri.',
+        accent: 'blue'
+      },
+      {
+        id: 'book-2',
+        title: 'Filosofi Teras',
+        author: 'Henry Manampiring',
+        category: 'Filsafat & Psikologi Populer',
+        bookType: 'Pengembangan diri / filsafat populer non-fiksi berlatar lokal',
+        theme: 'Stoisisme (Filsafat Stoa) sebagai panduan praktis menghadapi emosi negatif dan tekanan hidup modern.',
+        synopsis: 'Buku ini mengadaptasi filsafat Yunani-Romawi Kuno agar relevan dengan keresahan anak muda di Indonesia, mulai dari cemas soal karier, urusan percintaan, hingga kekhawatiran di media sosial. Dengan gaya bahasa santai dan diselipi humor ringan, penulis mengajak pembaca membedakan hal-hal yang berada di dalam kendali kita dan yang di luar kendali kita agar pikiran lebih tenang.',
+        accent: 'terracotta'
+      },
+      {
+        id: 'book-3',
+        title: 'Duduk Dulu Jangan Lupa Jadi Manusia',
+        author: 'Syahid Muhammad',
+        category: 'Esai Reflektif',
+        bookType: 'Kumpulan esai reflektif / prosa motivasi',
+        theme: 'Pemulihan diri, self-love, dan pengingat bahwa tidak apa-apa berjalan pelan di tengah tuntutan hidup yang serba cepat.',
+        synopsis: 'Hadir layaknya surat hangat atau pelukan bagi siapa saja yang sedang merasa lelah, kewalahan, atau kehilangan arah. Melalui tulisan-tulisan pendek yang dekat dengan keseharian, penulis mengajak kita berhenti sejenak dari sibuknya dunia, memaafkan kekurangan diri sendiri, dan memberi ruang bagi diri kita yang sedang bertumbuh.',
+        accent: 'mint'
+      },
+      {
+        id: 'book-4',
+        title: 'The Courage to Be Disliked',
+        author: 'Ichiro Kishimi & Fumitake Koga',
+        category: 'Filsafat & Psikologi Populer',
+        bookType: 'Psikologi populer non-fiksi dalam bentuk dialog filosofis',
+        theme: 'Kebebasan psikologis, tanggung jawab emosional, dan keberanian hidup tanpa bergantung pada validasi orang lain.',
+        synopsis: 'Ditulis dalam format percakapan antara seorang filsuf dan anak muda yang skeptis, buku ini mengulas pemikiran psikolog Alfred Adler. Intinya menantang pandangan bahwa masa lalu selalu mengunci masa depan kita—sebaliknya, ketenangan bisa diraih saat kita berani tidak selalu disukai orang lain, melepaskan urusan orang lain, dan fokus menjalani masa kini (here and now).',
+        accent: 'yellow'
+      },
+      {
+        id: 'book-5',
+        title: 'Ada Tapi Tak Lagi Sama',
+        author: 'A. Wildan Hilmi',
+        category: 'Prosa & Puisi',
+        bookType: 'Kumpulan prosa / puisi / catatan reflektif',
+        theme: 'Patah hati, kehilangan, proses merelakan (letting go), dan penerimaan atas perubahan dalam hubungan.',
+        synopsis: 'Karya sastra bertema romansa dan pemulihan batin yang merangkum fase-fase rumit setelah perpisahan atau berubahnya kedekatan. Lewat bait-bait puisi dan prosa yang lembut serta dekat dengan kenyataan sehari-hari, penulis memotret perasaan rindu pada seseorang yang masih ada di dunia, namun rasanya sudah tak lagi sama. Cocok jadi teman sunyi saat belajar berdamai dengan kenangan.',
+        accent: 'terracotta'
+      },
+      {
+        id: 'book-6',
+        title: 'A Gentle Reminder for Your Soul',
+        author: 'Bianca Sparacino',
+        category: 'Prosa & Puisi',
+        bookType: 'Kumpulan catatan reflektif & puisi singkat',
+        theme: 'Pengingat lembut untuk menenangkan hati di tengah kesibukan dan overthinking.',
+        synopsis: 'Buku ini berisi kumpulan curhatan hangat, puisi singkat, dan kata-kata penenang yang pas dibaca kapan saja tanpa alur cerita yang rumit. Rasanya seperti lagi ngobrol sama teman baik yang mengerti isi hati dan mengingatkan hal-hal penting yang sering kita lupa gara-gara terlalu sibuk atau overthinking. Buka halaman mana saja secara acak dan ambil pengingatmu hari ini!',
+        accent: 'mint'
+      }
+    ];
+
+    /* ==========================================================================
+       3. INITIALIZATION & DEVICE-RESPONSIVE NAVIGATION CONTROLLERS
+    ========================================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar-logo-slot').innerHTML = getMascotSVG({ withBackdrop: false, withExtraSparkles: false });
+      document.getElementById('sidebar-logo-slot').innerHTML = getMascotSVG({ withBackdrop: false, withExtraSparkles: true });
+
+      syncSidebarUI();
+      navigateTo('beranda');
+
+      window.addEventListener('resize', () => {
+        const isNowDesktop = window.innerWidth >= 1024;
+        if (isNowDesktop !== lastWasDesktop) {
+          lastWasDesktop = isNowDesktop;
+          state.sidebarOpen = isNowDesktop;
+        }
+        syncSidebarUI();
+      });
+    });
+
+    function navigateTo(view, options = {}) {
+      state.currentView = view;
+
+      if (view === 'konsultasi' && options.filter) {
+        state.konsultasiFilter = options.filter;
+        state.submenuOpen = true;
+      }
+
+      if (window.innerWidth < 1024) {
+        state.sidebarOpen = false;
+        syncSidebarUI();
+      }
+
+      updateActiveNavStyles();
+      renderCurrentView();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateActiveNavStyles() {
+      document.querySelectorAll('.nav-item').forEach((el) => {
+        const navKey = el.getAttribute('data-nav');
+        if (navKey === state.currentView && navKey !== 'konsultasi') {
+          el.classList.add('bg-activeNavBlue', 'font-bold');
+          el.classList.remove('font-normal');
+        } else {
+          el.classList.remove('bg-activeNavBlue', 'font-bold');
+          el.classList.add('font-normal');
+        }
+      });
+
+      const konsulWrapper = document.getElementById('konsultasi-nav-wrapper');
+      if (state.currentView === 'konsultasi') {
+        konsulWrapper.classList.add('bg-activeNavBlue');
+        konsulWrapper.querySelector('.nav-item').classList.add('font-bold');
+      } else {
+        konsulWrapper.classList.remove('bg-activeNavBlue');
+      }
+
+      document.querySelectorAll('.subnav-item').forEach((sub) => {
+        const subKey = sub.getAttribute('data-subnav');
+        if (state.currentView === 'konsultasi' && state.konsultasiFilter === subKey) {
+          sub.classList.add('bg-softSecondaryBg', 'font-bold', 'text-espresso');
+        } else {
+          sub.classList.remove('bg-softSecondaryBg', 'font-bold', 'text-espresso');
+        }
+      });
+
+      const submenu = document.getElementById('konsultasi-submenu');
+      const chevron = document.getElementById('konsultasi-chevron');
+      if (state.submenuOpen) {
+        submenu.classList.remove('hidden');
+        chevron.style.transform = 'rotate(0deg)';
+      } else {
+        submenu.classList.add('hidden');
+        chevron.style.transform = 'rotate(-90deg)';
+      }
+    }
+
+    function toggleSubmenu() {
+      state.submenuOpen = !state.submenuOpen;
+      updateActiveNavStyles();
+    }
+
+    function toggleSidebar(forceState) {
+      state.sidebarOpen = typeof forceState === 'boolean' ? forceState : !state.sidebarOpen;
+      syncSidebarUI();
+    }
+
+    function closeSidebarMobile() {
+      if (window.innerWidth < 1024) {
+        state.sidebarOpen = false;
+        syncSidebarUI();
+      }
+    }
+
+    function syncSidebarUI() {
+      const sidebar = document.getElementById('right-sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      const chevron = document.getElementById('sidebar-toggle-chevron');
+      const mainInner = document.getElementById('main-inner');
+      const isDesktop = window.innerWidth >= 1024;
+
+      const openWidthClasses = ['w-[86vw]', 'max-w-[320px]', 'sm:w-[325px]', 'lg:w-[305px]', 'xl:w-[330px]', 'lg:max-w-none'];
+      const closedClasses = ['translate-x-full', 'lg:w-0', 'xl:w-0', 'lg:opacity-0', 'lg:pointer-events-none', 'lg:border-0'];
+
+      if (state.sidebarOpen) {
+        sidebar.classList.remove(...closedClasses);
+        sidebar.classList.add('translate-x-0', ...openWidthClasses);
+        if (mainInner) {
+          mainInner.classList.remove('max-w-[1200px]');
+          mainInner.classList.add('max-w-[1060px]');
+        }
+        if (!isDesktop) {
+          backdrop.classList.remove('hidden');
+        } else {
+          backdrop.classList.add('hidden');
+        }
+        if (chevron) chevron.style.transform = 'rotate(0deg)';
+      } else {
+        sidebar.classList.remove('translate-x-0', ...openWidthClasses);
+        sidebar.classList.add(...closedClasses);
+        if (mainInner) {
+          mainInner.classList.remove('max-w-[1060px]');
+          mainInner.classList.add('max-w-[1200px]');
+        }
+        backdrop.classList.add('hidden');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    /* ==========================================================================
+       4. MODAL & TOAST HELPERS
+    ========================================================================== */
+    let toastTimer = null;
+    function showToast(message, icon = '✨') {
+      const toast = document.getElementById('toast-banner');
+      document.getElementById('toast-text').textContent = message;
+      document.getElementById('toast-icon').textContent = icon;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3000);
+    }
+
+    function openModal(htmlContent) {
+      document.getElementById('modal-content').innerHTML = htmlContent;
+      const overlay = document.getElementById('modal-overlay');
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+    }
+
+    function closeModal() {
+      const overlay = document.getElementById('modal-overlay');
+      overlay.classList.add('hidden');
+      overlay.classList.remove('flex');
+    }
+
+    /* ==========================================================================
+       5. VIEW RENDERERS
+    ========================================================================== */
+    function renderCurrentView() {
+      const container = document.getElementById('view-container');
+      switch (state.currentView) {
+        case 'beranda':
+          container.innerHTML = renderBerandaView();
+          break;
+        case 'cek-kondisi':
+          container.innerHTML = renderCekKondisiView();
+          break;
+        case 'konsultasi':
+          container.innerHTML = renderKonsultasiView();
+          break;
+        case 'tempat-healing':
+          container.innerHTML = renderTempatHealingView();
+          break;
+        case 'buku':
+          container.innerHTML = renderBukuView();
+          break;
+        default:
+          container.innerHTML = renderBerandaView();
+      }
+    }
+
+    /* -------------------- VIEW 1: BERANDA -------------------- */
+    function renderBerandaView() {
+      return `
+        <div class="view-enter">
+          <!-- HERO SECTION (Centered di HP, Split 2 Kolom di Tablet/iPad & Laptop) -->
+          <section class="grid grid-cols-1 md:grid-cols-12 items-center gap-5 md:gap-4 pt-1 pb-6 sm:pb-8">
+            <div class="md:col-span-7 relative text-center md:text-left">
+              <h1 class="rod-judul-besar">
+                How are you<br />
+                <span class="relative inline-block">
+                  feeling
+                  <svg class="absolute left-0 -bottom-1.5 sm:-bottom-2 w-full h-3 sm:h-3.5 pointer-events-none" viewBox="0 0 180 14" fill="none" preserveAspectRatio="none">
+                    <path d="M3 8 Q 22 2, 42 8 T 82 8 T 122 8 T 162 8 T 177 7" stroke="#C98A5A" stroke-width="4" stroke-linecap="round" />
+                  </svg>
+                </span>
+                <span class="relative inline-block">
+                  today?
+                  <svg class="w-6 h-6 sm:w-8 sm:h-8 lg:w-9 lg:h-9 absolute -top-1.5 -right-7 sm:-right-9 lg:-right-10" viewBox="0 0 36 36" fill="none">
+                    <path d="M7 14 L12 5" stroke="#FFD166" stroke-width="3.2" stroke-linecap="round" />
+                    <path d="M13 19 L24 12" stroke="#C98A5A" stroke-width="3" stroke-linecap="round" />
+                    <path d="M16 25 L27 24" stroke="#FFD166" stroke-width="3.2" stroke-linecap="round" />
+                  </svg>
+                </span>
+              </h1>
+
+              <p class="font-hand text-[20px] sm:text-[23px] lg:text-[24px] text-espresso mt-4 sm:mt-5 flex items-center justify-center md:justify-start flex-wrap gap-1.5">
+                <span>Take a moment to check in with yourself.</span>
+                <svg class="w-5 h-5 inline-block text-espresso" viewBox="0 0 24 24" fill="#FFD166" stroke="#3A2E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20.5C12 20.5 3.5 15 3.5 8.8C3.5 6.1 5.6 4 8.2 4C9.8 4 11.2 4.8 12 6C12.8 4.8 14.2 4 15.8 4C18.4 4 20.5 6.1 20.5 8.8C20.5 15 12 20.5 12 20.5Z" />
+                </svg>
+              </p>
+            </div>
+
+            <div class="md:col-span-5 flex justify-center md:justify-end">
+              <div class="w-[185px] sm:w-[225px] md:w-[215px] lg:w-[245px] xl:w-[270px] animate-gentle-float">
+                ${getMascotSVG({ withBackdrop: true, withExtraSparkles: true })}
+              </div>
+            </div>
+          </section>
+
+          <!-- MAIN BANNER CARD: MENTAL HEALTH CHECK -->
+          <section class="mb-7 sm:mb-9">
+            <div class="relative bg-creamCard border border-warmBorder rounded-[24px] sm:rounded-[26px] shadow-softCard px-5 py-6 sm:px-8 sm:py-7 flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 overflow-hidden">
+              <div class="max-w-lg z-10 text-center sm:text-left">
+                <h2 class="rod-sub-judul">
+                  Mental Health Check
+                </h2>
+                <p class="rod-body-text text-mutedBrown mt-1.5 mb-5">
+                  Kenali kondisi emosional dan psikologismu melalui asesmen singkat.
+                </p>
+                <button
+                  onclick="navigateTo('cek-kondisi')"
+                  class="group inline-flex items-center justify-center gap-2.5 w-full sm:w-auto bg-primaryBlue hover:bg-primaryBlueHover active:scale-[0.98] text-white font-heading font-bold text-[15.5px] sm:text-[16px] px-6 py-3 sm:py-2.5 rounded-full shadow-[0_6px_16px_rgba(62,142,222,0.3)] transition"
+                >
+                  <span>Mulai sekarang</span>
+                  <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="relative flex-shrink-0 w-[195px] sm:w-[225px] md:w-[240px] h-[115px] sm:h-[135px] flex items-center justify-center">
+                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 250 140" fill="none">
+                  <path d="M35 112 C 12 112, 6 84, 28 70 C 44 60, 56 36, 86 24 C 122 10, 188 8, 218 34 C 246 58, 240 108, 200 116 C 155 125, 82 112, 35 112 Z" fill="#E6F1FC" />
+                </svg>
+
+                <svg class="relative z-10 w-[125px] sm:w-[135px] h-[115px] sm:h-[125px]" viewBox="0 0 150 135" fill="none">
+                  <g transform="rotate(8 75 68)">
+                    <rect x="34" y="24" width="66" height="86" rx="11" fill="#FFF9F2" stroke="#3E8EDE" stroke-width="3.4" />
+                    <rect x="53" y="16" width="28" height="14" rx="5" fill="#E5F7EF" stroke="#3E8EDE" stroke-width="3.2" />
+                    <path d="M46 47 L 50 51 L 57 43" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <line x1="64" y1="48" x2="87" y2="48" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" />
+                    <path d="M46 66 L 50 70 L 57 62" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <line x1="64" y1="67" x2="87" y2="67" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" />
+                    <path d="M46 85 L 50 89 L 57 81" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <line x1="64" y1="86" x2="87" y2="86" stroke="#3E8EDE" stroke-width="3" stroke-linecap="round" />
+                  </g>
+
+                  <path d="M113 55 L 125 46" stroke="#FFD166" stroke-width="3.4" stroke-linecap="round" />
+                  <path d="M116 68 L 132 66" stroke="#C98A5A" stroke-width="3.2" stroke-linecap="round" />
+                  <path d="M114 81 L 127 87" stroke="#FFD166" stroke-width="3.4" stroke-linecap="round" />
+                </svg>
+              </div>
+            </div>
+          </section>
+
+          <!-- EXPLORE MORE SECTION (1 kolom HP, 2x2 di Tablet/Laptop sedang, 4 kolom di Laptop lebar) -->
+          <section>
+            <div class="flex items-center justify-between mb-4">
+              <div class="relative flex items-center gap-2">
+                <svg class="w-6 h-6 sm:w-7 sm:h-7 -ml-1 sm:-ml-2 -mt-1" viewBox="0 0 32 32" fill="none">
+                  <path d="M22 10 L 12 6" stroke="#C98A5A" stroke-width="2.8" stroke-linecap="round" />
+                  <path d="M21 17 L 9 16" stroke="#FFD166" stroke-width="3" stroke-linecap="round" />
+                  <path d="M22 23 L 14 27" stroke="#C98A5A" stroke-width="2.8" stroke-linecap="round" />
+                </svg>
+                <h2 class="rod-sub-judul">
+                  Explore More
+                </h2>
+              </div>
+
+              <svg class="w-7 h-7 sm:w-8 sm:h-8 mr-1 -mb-1" viewBox="0 0 34 34" fill="none">
+                <path d="M9 17 L 15 7" stroke="#3E8EDE" stroke-width="2.8" stroke-linecap="round" />
+                <path d="M15 21 L 25 13" stroke="#A2E2C7" stroke-width="3" stroke-linecap="round" />
+                <path d="M18 26 L 28 24" stroke="#3E8EDE" stroke-width="2.8" stroke-linecap="round" />
+              </svg>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5 sm:gap-4 lg:gap-[18px]">
+              <button
+                onclick="navigateTo('cek-kondisi')"
+                class="explore-card bg-softBlueBg border border-primaryBlue/15 rounded-[22px] p-5 sm:p-[22px] text-left flex flex-col justify-between focus:outline-none active:scale-[0.99]"
+              >
+                <div>
+                  <div class="w-10 h-10 mb-3 flex items-center justify-start">
+                    <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="#3E8EDE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="5" y="15" width="5" height="11" rx="1.5" />
+                      <rect x="13.5" y="7" width="5" height="19" rx="1.5" />
+                      <rect x="22" y="12" width="5" height="14" rx="1.5" />
+                    </svg>
+                  </div>
+                  <h3 class="font-heading font-bold text-[17.5px] sm:text-[18px] text-espresso leading-snug">
+                    Cek Kondisi Mental
+                  </h3>
+                  <p class="text-[14.5px] text-mutedBrown leading-relaxed mt-1.5">
+                    Kenali perasaanmu lewat asesmen singkat
+                  </p>
+                </div>
+              </button>
+
+              <button
+                onclick="navigateTo('konsultasi', { filter: 'Panduan' })"
+                class="explore-card bg-softSecondaryBg border border-secondaryTerracotta/20 rounded-[22px] p-5 sm:p-[22px] text-left flex flex-col justify-between focus:outline-none active:scale-[0.99]"
+              >
+                <div>
+                  <div class="w-10 h-10 mb-3 flex items-center justify-start">
+                    <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="#C98A5A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M6 15.5C6 10.25 10.48 6 16 6C21.52 6 26 10.25 26 15.5C26 20.75 21.52 25 16 25C14.15 25 12.42 24.52 10.94 23.69L6.5 25L7.85 20.95C6.68 19.42 6 17.54 6 15.5Z" />
+                      <circle cx="12" cy="15.5" r="1" fill="#C98A5A" />
+                      <circle cx="16" cy="15.5" r="1" fill="#C98A5A" />
+                      <circle cx="20" cy="15.5" r="1" fill="#C98A5A" />
+                    </svg>
+                  </div>
+                  <h3 class="font-heading font-bold text-[17.5px] sm:text-[18px] text-espresso leading-snug">
+                    Layanan Konsultasi
+                  </h3>
+                  <p class="text-[14.5px] text-mutedBrown leading-relaxed mt-1.5">
+                    Pahami perbedaan & cek rekomendasi konselor, psikolog, atau psikiater
+                  </p>
+                </div>
+              </button>
+
+              <button
+                onclick="navigateTo('tempat-healing')"
+                class="explore-card bg-softMintBg border border-compMint/45 rounded-[22px] p-5 sm:p-[22px] text-left flex flex-col justify-between focus:outline-none active:scale-[0.99]"
+              >
+                <div>
+                  <div class="w-10 h-10 mb-3 flex items-center justify-start">
+                    <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="#3A9672" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M16 27.5C16 27.5 7.5 20.2 7.5 13.2C7.5 8.5 11.3 4.8 16 4.8C20.7 4.8 24.5 8.5 24.5 13.2C24.5 20.2 16 27.5 16 27.5Z" />
+                      <circle cx="16" cy="13.2" r="3.2" />
+                    </svg>
+                  </div>
+                  <h3 class="font-heading font-bold text-[17.5px] sm:text-[18px] text-espresso leading-snug">
+                    Rekomendasi Tempat Healing
+                  </h3>
+                  <p class="text-[14.5px] text-mutedBrown leading-relaxed mt-1.5">
+                    22 tempat nyaman di Bandung buat menenangkan pikiran
+                  </p>
+                </div>
+              </button>
+
+              <button
+                onclick="navigateTo('buku')"
+                class="explore-card bg-softYellowBg border border-compYellow/55 rounded-[22px] p-5 sm:p-[22px] text-left flex flex-col justify-between focus:outline-none active:scale-[0.99]"
+              >
+                <div>
+                  <div class="w-10 h-10 mb-3 flex items-center justify-start">
+                    <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="#C58B16" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4.5 8.5C4.5 7.4 5.4 6.5 6.5 6.5H13.5C14.9 6.5 16 7.6 16 9V24.5C16 23.4 15.1 22.5 14 22.5H6.5C5.4 22.5 4.5 21.6 4.5 20.5V8.5Z" />
+                      <path d="M27.5 8.5C27.5 7.4 26.6 6.5 25.5 6.5H18.5C17.1 6.5 16 7.6 16 9V24.5C16 23.4 16.9 22.5 18 22.5H25.5C26.6 22.5 27.5 21.6 27.5 20.5V8.5Z" />
+                    </svg>
+                  </div>
+                  <h3 class="font-heading font-bold text-[17.5px] sm:text-[18px] text-espresso leading-snug">
+                    Rekomendasi Buku
+                  </h3>
+                  <p class="text-[14.5px] text-mutedBrown leading-relaxed mt-1.5">
+                    Bacaan hangat dan reflektif untuk menemani harimu
+                  </p>
+                </div>
+              </button>
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    /* -------------------- VIEW 2: CEK KONDISI MENTAL -------------------- */
+    function renderCekKondisiView() {
+      const q = ASSESSMENT_QUESTIONS[state.currentQuestionIdx];
+      const progressPct = Math.round(((state.currentQuestionIdx + 1) / ASSESSMENT_QUESTIONS.length) * 100);
+      const selectedScore = state.answers[q.id];
+
+      return `
+        <div class="view-enter">
+          <div class="mb-5 sm:mb-6">
+            <button onclick="navigateTo('beranda')" class="inline-flex items-center gap-1.5 text-[14px] font-bold text-primaryBlue hover:underline mb-1.5 py-1">
+              ← Kembali ke Beranda
+            </button>
+            <h1 class="rod-judul-besar">Cek Kondisi Mental</h1>
+            <p class="font-hand text-[19px] sm:text-[21px] text-mutedBrown mt-0.5">Jawab dengan jujur dan lembut pada dirimu sendiri ♡</p>
+          </div>
+
+          <div class="bg-creamCard border border-warmBorder rounded-[24px] sm:rounded-[28px] shadow-softCard p-5 sm:p-8 max-w-2xl mx-auto">
+            <div class="flex items-center justify-end text-[13px] font-bold text-mutedBrown mb-2">
+              <span>${state.currentQuestionIdx + 1}/${ASSESSMENT_QUESTIONS.length}</span>
+            </div>
+            <div class="w-full h-2.5 bg-softBlueBg rounded-full overflow-hidden mb-5 sm:mb-6">
+              <div class="h-full bg-primaryBlue rounded-full transition-all duration-300" style="width: ${progressPct}%"></div>
+            </div>
+
+            <h2 class="rod-sub-judul mb-2">
+              ${q.question}
+            </h2>
+            <p class="rod-body-text text-mutedBrown mb-5 sm:mb-6">
+              ${q.helperText}
+            </p>
+
+            <div class="space-y-2.5 sm:space-y-3">
+              ${q.options.map(opt => {
+                const active = selectedScore === opt.score;
+                return `
+                  <button
+                    onclick="selectAssessmentOption('${q.id}', ${opt.score})"
+                    class="w-full flex items-center gap-3.5 sm:gap-4 p-3.5 sm:p-4 rounded-2xl border text-left transition active:scale-[0.99] min-h-[54px] ${
+                      active
+                        ? 'bg-softBlueBg border-primaryBlue ring-2 ring-primaryBlue/30'
+                        : 'bg-cream border-warmBorder hover:border-primaryBlue/50 hover:bg-softBlueBg/35'
+                    }"
+                  >
+                    <span class="text-xl sm:text-2xl flex-shrink-0">${opt.emoji}</span>
+                    <span class="rod-body-text text-espresso flex-1">${opt.label}</span>
+                    <span class="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${active ? 'border-primaryBlue bg-primaryBlue' : 'border-[#D5C5B5]'}">
+                      ${active ? '<span class="w-2 h-2 rounded-full bg-white"></span>' : ''}
+                    </span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="flex items-center justify-between gap-2.5 mt-6 sm:mt-7 pt-4 sm:pt-5 border-t border-warmBorder">
+              <button
+                onclick="prevAssessmentStep()"
+                ${state.currentQuestionIdx === 0 ? 'disabled' : ''}
+                class="px-4 sm:px-5 py-2.5 rounded-full text-[14px] sm:text-[15px] font-heading font-bold text-espresso bg-cream border border-warmBorder disabled:opacity-40 hover:bg-softSecondaryBg/50 transition min-h-[44px]"
+              >
+                ← Sebelumnya
+              </button>
+
+              ${state.currentQuestionIdx < ASSESSMENT_QUESTIONS.length - 1 ? `
+                <button
+                  onclick="nextAssessmentStep()"
+                  class="px-5 sm:px-6 py-2.5 rounded-full text-[14px] sm:text-[15px] font-heading font-bold text-white bg-primaryBlue hover:bg-primaryBlueHover shadow-sm transition min-h-[44px]"
+                >
+                  Lanjut →
+                </button>
+              ` : `
+                <button
+                  onclick="submitAssessment()"
+                  class="px-5 sm:px-6 py-2.5 rounded-full text-[14px] sm:text-[15px] font-heading font-bold text-white bg-primaryBlue hover:bg-primaryBlueHover shadow-md transition min-h-[44px]"
+                >
+                  Lihat Hasil Check-In ✨
+                </button>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectAssessmentOption(qId, score) {
+      state.answers[qId] = score;
+      renderCurrentView();
+    }
+
+    function prevAssessmentStep() {
+      if (state.currentQuestionIdx > 0) {
+        state.currentQuestionIdx--;
+        renderCurrentView();
+      }
+    }
+
+    function nextAssessmentStep() {
+      const currentQ = ASSESSMENT_QUESTIONS[state.currentQuestionIdx];
+      if (state.answers[currentQ.id] === undefined) {
+        showToast('Pilih salah satu jawaban yang paling sesuai dulu ya 💙', '🌿');
+        return;
+      }
+      state.currentQuestionIdx++;
+      renderCurrentView();
+    }
+
+    function submitAssessment() {
+      const currentQ = ASSESSMENT_QUESTIONS[state.currentQuestionIdx];
+      if (state.answers[currentQ.id] === undefined) {
+        showToast('Pilih jawaban terakhir terlebih dahulu ya 💙', '🌿');
+        return;
+      }
+
+      const moodScore = Number(state.answers.mood || 0);
+      let questionnaireSum = 0;
+      for (let i = 1; i <= QUESTIONNAIRE_STATEMENTS.length; i++) {
+        questionnaireSum += Number(state.answers[`q${i}`] || 0);
+      }
+      const questionnaireWeighted = (questionnaireSum / 80) * 70;
+      const finalScore = Math.round(moodScore + questionnaireWeighted);
+
+      let starExpression = 'bahagia';
+      let categoryTitle = 'Bagus Banget!';
+      let categoryDesc = 'Mood lagi cerah, pikiran stabil, dan ga banyak beban.';
+      let badgeStyle = 'bg-softMintBg text-[#2C7A5B] border border-compMint';
+      let tip = 'Pertahankan rutinitas baikmu hari ini, dan jangan lupa apresiasi diri sendiri karena sudah menjaga keseimbangan dengan baik.';
+
+      if (finalScore >= 80) {
+        starExpression = 'bahagia';
+        categoryTitle = 'Bagus Banget!';
+        categoryDesc = 'Mood lagi cerah, pikiran stabil, dan ga banyak beban.';
+        badgeStyle = 'bg-softMintBg text-[#2C7A5B] border border-compMint';
+        tip = 'Pertahankan rutinitas baikmu hari ini, dan jangan lupa apresiasi diri sendiri karena sudah menjaga keseimbangan dengan baik.';
+      } else if (finalScore >= 60) {
+        starExpression = 'senang';
+        categoryTitle = 'Bagus Aja.';
+        categoryDesc = 'Mood masih terbilang oke, wajar kalau ada capek dikit tapi terkendali.';
+        badgeStyle = 'bg-softBlueBg text-primaryBlue border border-primaryBlue/25';
+        tip = 'Tetap beri jeda istirahat ringan di sela aktivitasmu supaya rasa capek tidak menumpuk.';
+      } else if (finalScore >= 40) {
+        starExpression = 'flat';
+        categoryTitle = 'Agak Ga Bagus.';
+        categoryDesc = 'Lagi lumayan banyak pikiran, capek fisik atau mental, butuh jeda bentar.';
+        badgeStyle = 'bg-softYellowBg text-[#9B6B0C] border border-compYellow';
+        tip = 'Coba tarik napas sejenak, kurangi beban aktivitas yang tidak mendesak, atau kunjungi tempat healing yang tenang.';
+      } else {
+        starExpression = 'sedih';
+        categoryTitle = 'Ga Bagus.';
+        categoryDesc = 'Mood lagi bener-bener drop, kewalahan, butuh banget istirahat dan healing sejenak.';
+        badgeStyle = 'bg-softSecondaryBg text-[#9E5E31] border border-secondaryTerracotta/40';
+        tip = 'Kamu tidak harus memikul semuanya sendirian. Istirahat dulu sejenak, dan pertimbangkan ngobrol dengan konselor atau psikolog agar terasa lebih lega.';
+      }
+
+      state.answers = {};
+      state.currentQuestionIdx = 0;
+      renderCurrentView();
+
+      openModal(`
+        <div class="text-center">
+          <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-2 animate-gentle-float">
+            ${getStarExpressionSVG(starExpression)}
+          </div>
+          <span class="inline-block px-3.5 py-1 rounded-full text-[13px] font-heading font-bold ${badgeStyle} mb-2">
+            Skor Akhir ${finalScore}/100
+          </span>
+          <h3 class="rod-sub-judul mb-2">${categoryTitle}</h3>
+          <p class="rod-body-text text-espresso mb-4">${categoryDesc}</p>
+          <div class="bg-softBlueBg/80 border border-primaryBlue/15 rounded-2xl p-4 text-left text-[14.5px] sm:text-[15px] text-espresso mb-5">
+            <strong class="block font-heading font-bold mb-1">💡 Saran Lembut Untukmu:</strong>
+            ${tip}
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2.5 justify-center">
+            <button onclick="closeModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-full bg-cream border border-warmBorder font-heading font-bold text-[15px] text-espresso hover:bg-softSecondaryBg/50 transition min-h-[44px]">
+              Tutup
+            </button>
+            <button onclick="closeModal(); navigateTo('konsultasi', { filter: 'Panduan' })" class="w-full sm:w-auto px-5 py-2.5 rounded-full bg-primaryBlue hover:bg-primaryBlueHover font-heading font-bold text-[15px] text-white transition min-h-[44px]">
+              Kenali Layanan Konsultasi →
+            </button>
+          </div>
+        </div>
+      `);
+    }
+
+    /* -------------------- VIEW 3: LAYANAN KONSULTASI -------------------- */
+    function renderKonsultasiView() {
+      const tabs = [
+        { key: 'Panduan', label: 'Kenali 3 Profesi' },
+        { key: 'Konselor', label: 'Konselor' },
+        { key: 'Psikolog', label: 'Psikolog' },
+        { key: 'Psikiater', label: 'Psikiater' }
+      ];
+
+      return `
+        <div class="view-enter">
+          <div class="mb-5 sm:mb-6">
+            <button onclick="navigateTo('beranda')" class="inline-flex items-center gap-1.5 text-[14px] font-bold text-primaryBlue hover:underline mb-1.5 py-1">
+              ← Kembali ke Beranda
+            </button>
+            <h1 class="rod-judul-besar">Layanan Konsultasi</h1>
+            <p class="font-hand text-[19px] sm:text-[21px] text-mutedBrown mt-0.5">Kenali perbedaannya dan temukan layanan pendampingan yang pas untukmu ♡</p>
+          </div>
+
+          <!-- Navigation Pills -->
+          <div class="flex flex-wrap gap-2 mb-6">
+            ${tabs.map(t => {
+              const active = state.konsultasiFilter === t.key;
+              return `
+                <button
+                  onclick="setKonsultasiFilter('${t.key}')"
+                  class="px-3.5 sm:px-4 py-2 rounded-full text-[13.5px] sm:text-[15px] font-heading font-bold transition min-h-[40px] ${
+                    active
+                      ? 'bg-primaryBlue text-white shadow-sm'
+                      : 'bg-creamCard border border-warmBorder text-espresso hover:bg-softBlueBg/70'
+                  }"
+                >
+                  ${t.label}
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          ${state.konsultasiFilter === 'Panduan' ? renderKonsultasiOverviewTab() : ''}
+          ${state.konsultasiFilter === 'Konselor' ? renderKonselorDetailTab() : ''}
+          ${state.konsultasiFilter === 'Psikolog' ? renderPsikologDetailTab() : ''}
+          ${state.konsultasiFilter === 'Psikiater' ? renderPsikiaterDetailTab() : ''}
+        </div>
+      `;
+    }
+
+    function setKonsultasiFilter(role) {
+      state.konsultasiFilter = role;
+      updateActiveNavStyles();
+      renderCurrentView();
+    }
+
+    function setPsikologMode(mode) {
+      state.psikologMode = mode;
+      renderCurrentView();
+    }
+
+    function setPsikologAgeGroup(age) {
+      state.psikologAgeGroup = age;
+      renderCurrentView();
+    }
+
+    /* Tab 1: Ringkasan Perbedaan 3 Profesi */
+    function renderKonsultasiOverviewTab() {
+      return `
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
+            ${PROFESSION_OVERVIEW.map((guide, idx) => {
+              const themeStyles = {
+                blue: {
+                  card: 'bg-softBlueBg/85 border-primaryBlue/20',
+                  sparkle: '#3E8EDE',
+                  num: 'text-primaryBlue',
+                  tagline: 'text-primaryBlue',
+                  dot: 'bg-primaryBlue',
+                  divider: 'border-primaryBlue/15',
+                  btn: 'bg-primaryBlue hover:bg-primaryBlueHover text-white'
+                },
+                terracotta: {
+                  card: 'bg-softSecondaryBg/90 border-secondaryTerracotta/25',
+                  sparkle: '#C98A5A',
+                  num: 'text-secondaryTerracotta',
+                  tagline: 'text-[#A66B3F]',
+                  dot: 'bg-secondaryTerracotta',
+                  divider: 'border-secondaryTerracotta/20',
+                  btn: 'bg-secondaryTerracotta hover:bg-secondaryHover text-white'
+                },
+                mint: {
+                  card: 'bg-softMintBg/90 border-compMint/60',
+                  sparkle: '#3A9672',
+                  num: 'text-[#2F8463]',
+                  tagline: 'text-[#2F8463]',
+                  dot: 'bg-[#3A9672]',
+                  divider: 'border-compMint/50',
+                  btn: 'bg-creamCard hover:bg-white text-espresso border border-compMint'
+                }
+              }[guide.theme];
+
+              return `
+                <div class="explore-card relative ${themeStyles.card} border rounded-[26px] sm:rounded-[32px] p-5 sm:p-7 flex flex-col justify-between overflow-hidden">
+                  <svg class="pointer-events-none w-7 h-7 absolute top-5 right-5 opacity-85" viewBox="0 0 32 32" fill="none">
+                    <path d="M9 17 L 15 7" stroke="${themeStyles.sparkle}" stroke-width="2.6" stroke-linecap="round" />
+                    <path d="M15 21 L 25 13" stroke="#FFD166" stroke-width="2.8" stroke-linecap="round" />
+                    <path d="M18 26 L 28 24" stroke="${themeStyles.sparkle}" stroke-width="2.6" stroke-linecap="round" />
+                  </svg>
+
+                  <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-3 pr-7">
+                      <span class="w-8 h-8 rounded-full bg-creamCard flex items-center justify-center font-heading font-bold text-[15px] ${themeStyles.num} shadow-sm">
+                        0${idx + 1}
+                      </span>
+                      <span class="rod-note-text px-3 py-1 rounded-full bg-creamCard/90 text-espresso border border-warmBorder/60">
+                        ${guide.badge}
+                      </span>
+                    </div>
+
+                    <h2 class="rod-sub-judul">${guide.role}</h2>
+                    <p class="font-hand text-[18.5px] sm:text-[19px] ${themeStyles.tagline} leading-snug mt-0.5 mb-4">
+                      ${guide.tagline}
+                    </p>
+
+                    <div class="bg-creamCard/85 rounded-2xl p-3.5 mb-4">
+                      <p class="text-[14.5px] sm:text-[15px] text-mutedBrown leading-relaxed">
+                        ${guide.summary}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 class="font-heading font-bold text-[15px] text-espresso mb-2">
+                        Cocok dipilih saat:
+                      </h3>
+                      <ul class="space-y-2">
+                        ${guide.highlights.map(item => `
+                          <li class="flex items-start gap-2 text-[14px] sm:text-[14.5px] text-espresso/90 leading-relaxed">
+                            <span class="w-2 h-2 rounded-full ${themeStyles.dot} mt-2 flex-shrink-0"></span>
+                            <span>${item}</span>
+                          </li>
+                        `).join('')}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="mt-6 pt-4 border-t ${themeStyles.divider}">
+                    <button
+                      onclick="setKonsultasiFilter('${guide.role}')"
+                      class="w-full py-2.5 px-4 rounded-full ${themeStyles.btn} font-heading font-bold text-[14px] sm:text-[14.5px] shadow-sm transition flex items-center justify-center gap-1.5 min-h-[44px]"
+                    >
+                      <span>${guide.ctaText}</span>
+                      <span>→</span>
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- Catatan Hangat & Darurat -->
+          <div class="bg-softYellowBg/70 border border-compYellow/65 rounded-[24px] px-5 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="rod-quote-hand text-espresso text-center sm:text-left">
+              Masih bingung harus mulai dari mana? Kamu bisa mulai dari layanan gratis seperti Guru BK, Puspaga, atau konseling kampus dulu. Kalau sudah ada dorongan menyakiti diri, segera hubungi <strong>119</strong> atau ke IGD terdekat ya ♡
+            </p>
+            <button
+              onclick="navigateTo('cek-kondisi')"
+              class="w-full sm:w-auto flex-shrink-0 px-5 py-2.5 rounded-full bg-primaryBlue hover:bg-primaryBlueHover text-white font-heading font-bold text-[14px] transition min-h-[44px]"
+            >
+              Cek Kondisi Dulu ✨
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    /* Tab 2: Konselor */
+    function renderKonselorDetailTab() {
+      return `
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div class="lg:col-span-6 bg-softBlueBg/80 border border-primaryBlue/20 rounded-[24px] sm:rounded-[28px] p-5 sm:p-6">
+              <span class="inline-block px-3 py-1 rounded-full bg-creamCard text-primaryBlue font-heading font-bold text-[13px] mb-2">
+                Kenalan Sama Konselor
+              </span>
+              <h2 class="rod-sub-judul mb-2.5">Konselor itu apa?</h2>
+              <p class="rod-body-text text-espresso/90 leading-relaxed mb-4">
+                ${KONSELOR_DATA.apaItu}
+              </p>
+
+              <div class="bg-creamCard/90 border border-warmBorder rounded-2xl p-4">
+                <h3 class="font-heading font-bold text-[16px] text-espresso mb-2">Tugasnya apa aja?</h3>
+                <ul class="space-y-1.5">
+                  ${KONSELOR_DATA.tugas.map(t => `
+                    <li class="flex items-start gap-2.5 text-[14.5px] sm:text-[15px] text-espresso/90">
+                      <span class="w-2 h-2 rounded-full bg-primaryBlue mt-2 flex-shrink-0"></span>
+                      <span>${t}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+
+            <div class="lg:col-span-6 bg-creamCard border border-warmBorder rounded-[24px] sm:rounded-[28px] p-5 sm:p-6 shadow-softCard flex flex-col justify-between">
+              <div>
+                <span class="inline-block px-3 py-1 rounded-full bg-softSecondaryBg text-[#9E5E31] font-heading font-bold text-[13px] mb-2">
+                  Waktu yang Tepat
+                </span>
+                <h2 class="rod-sub-judul mb-2">Kapan ke konselor?</h2>
+                <p class="text-[14.5px] sm:text-[15px] text-mutedBrown mb-3">
+                  Cocok kalau masalahnya masih seputar keseharian dan belum sampai mengganggu aktivitas banget, misalnya:
+                </p>
+                <ul class="space-y-2 mb-5">
+                  ${KONSELOR_DATA.kapanKeKonselor.map(item => `
+                    <li class="flex items-start gap-2.5 text-[14.5px] sm:text-[15px] text-espresso">
+                      <span class="text-secondaryTerracotta font-bold">✓</span>
+                      <span>${item}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+
+              <div class="bg-softMintBg/85 border border-compMint/60 rounded-2xl p-4">
+                <h3 class="font-heading font-bold text-[16px] text-espresso mb-1">
+                  🏫 Guru BK juga termasuk konselor lho!
+                </h3>
+                <p class="text-[14px] sm:text-[14.5px] text-espresso/90 leading-relaxed">
+                  ${KONSELOR_DATA.infoGuruBK}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rujukan ke Profesi Lain -->
+          <div class="bg-creamCard border border-warmBorder rounded-[24px] sm:rounded-[26px] p-5 sm:p-6 shadow-softCard">
+            <h3 class="font-heading font-bold text-[18.5px] sm:text-[20px] text-espresso mb-3">
+              Kalau kondisinya kayak gini, mending ke profesi lain:
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+              ${KONSELOR_DATA.rujukanLain.map((r, idx) => {
+                const bg = idx === 0 ? 'bg-softSecondaryBg/75 border-secondaryTerracotta/25' : idx === 1 ? 'bg-softBlueBg/75 border-primaryBlue/20' : 'bg-softYellowBg/85 border-compYellow/60';
+                return `
+                  <div class="${bg} border rounded-2xl p-4 flex flex-col justify-between">
+                    <p class="text-[14px] sm:text-[14.5px] text-espresso leading-relaxed mb-3">${r.kondisi}</p>
+                    ${r.targetFilter ? `
+                      <button onclick="setKonsultasiFilter('${r.targetFilter}')" class="self-start inline-flex items-center gap-1 text-[14px] font-heading font-bold text-primaryBlue hover:underline py-1">
+                        <span>→ Lanjut ke ${r.tujuan}</span>
+                      </button>
+                    ` : `
+                      <span class="inline-block text-[14px] font-heading font-bold text-[#9E5E31]">
+                        🚨 ${r.tujuan}
+                      </span>
+                    `}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- Daftar Tempat Konselor di Bandung -->
+          <div>
+            <div class="mb-4">
+              <h2 class="rod-sub-judul">Tempat Konselor di Bandung</h2>
+              <p class="text-[14.5px] sm:text-[15.5px] text-mutedBrown mt-0.5">Pilihan layanan konseling pemerintah, kampus, maupun biro swasta di Bandung</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+              ${KONSELOR_DATA.places.map((p, i) => `
+                <div class="bg-creamCard border border-warmBorder rounded-[24px] p-5 sm:p-6 shadow-softCard flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                      <span class="px-3 py-0.5 rounded-full text-[12px] font-heading font-bold bg-softBlueBg text-primaryBlue">
+                        Rekomendasi #0${i + 1}
+                      </span>
+                    </div>
+                    <h3 class="font-heading font-bold text-[18px] sm:text-[19px] text-espresso leading-snug mb-2">
+                      ${p.name}
+                    </h3>
+                    <div class="space-y-1.5 text-[14px] sm:text-[14.5px] text-espresso/90 mb-3">
+                      <p><strong>📍 Alamat:</strong> ${p.address}</p>
+                      <p><strong>💰 Biaya:</strong> ${p.cost}</p>
+                      <p><strong>📞 Kontak:</strong> ${p.contact}</p>
+                    </div>
+                    <p class="text-[14px] sm:text-[14.5px] text-mutedBrown leading-relaxed mb-3">
+                      ${p.desc}
+                    </p>
+                  </div>
+
+                  <div class="bg-softSecondaryBg/65 border border-secondaryTerracotta/20 rounded-xl px-3.5 py-2.5 text-[13.5px] sm:text-[14px] text-espresso">
+                    <strong>Cocok buat:</strong> ${p.cocokUntuk}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Kisaran Biaya & Tips -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-softBlueBg/75 border border-primaryBlue/20 rounded-[22px] p-5">
+              <h3 class="font-heading font-bold text-[17px] text-espresso mb-1">💵 Kisaran Biaya</h3>
+              <p class="text-[14px] sm:text-[14.5px] text-espresso/90 leading-relaxed">${KONSELOR_DATA.kisaranBiaya}</p>
+            </div>
+            <div class="bg-softMintBg/80 border border-compMint/60 rounded-[22px] p-5">
+              <h3 class="font-heading font-bold text-[17px] text-espresso mb-1">💡 Tips Praktis</h3>
+              <p class="text-[14px] sm:text-[14.5px] text-espresso/90 leading-relaxed">${KONSELOR_DATA.tips}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* Tab 3: Psikolog */
+    function renderPsikologDetailTab() {
+      const ageTabs = ['Anak-Anak', 'Remaja', 'Dewasa'];
+      const currentAgeData = PSIKOLOG_DATA.tandaUsia[state.psikologAgeGroup];
+
+      const showOffline = state.psikologMode === 'Semua' || state.psikologMode === 'Offline';
+      const showOnline = state.psikologMode === 'Semua' || state.psikologMode === 'Online';
+
+      return `
+        <div class="space-y-6 sm:space-y-7">
+          <div class="bg-creamCard border border-warmBorder rounded-[24px] sm:rounded-[28px] p-5 sm:p-7 shadow-softCard">
+            <span class="inline-block px-3 py-1 rounded-full bg-softSecondaryBg text-[#9E5E31] font-heading font-bold text-[13px] mb-2">
+              Kenali Tanda Klinisnya
+            </span>
+            <h2 class="rod-sub-judul mb-2">Kapan Harus ke Psikolog?</h2>
+            <p class="rod-body-text text-mutedBrown mb-5">
+              ${PSIKOLOG_DATA.intro}
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${PSIKOLOG_DATA.tandaUmum.map(item => `
+                <div class="bg-cream border border-warmBorder rounded-2xl p-4">
+                  <div class="flex items-center gap-2.5 mb-1.5">
+                    <span class="w-7 h-7 rounded-full bg-softSecondaryBg text-[#9E5E31] font-heading font-bold text-[13px] flex items-center justify-center flex-shrink-0">
+                      ${item.num}
+                    </span>
+                    <h3 class="font-heading font-bold text-[15.5px] sm:text-[16px] text-espresso leading-snug">${item.title}</h3>
+                  </div>
+                  <p class="text-[14px] sm:text-[14.5px] text-mutedBrown leading-relaxed">${item.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Tanda Spesifik Berdasarkan Kelompok Usia -->
+          <div class="bg-softBlueBg/65 border border-primaryBlue/20 rounded-[24px] sm:rounded-[28px] p-5 sm:p-7">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 class="rod-sub-judul">Tanda Berdasarkan Kelompok Usia</h2>
+                <p class="text-[14.5px] sm:text-[15px] text-mutedBrown mt-0.5">Pilih kelompok usia untuk melihat tanda psikologis yang perlu diperhatikan</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                ${ageTabs.map(age => {
+                  const active = state.psikologAgeGroup === age;
+                  return `
+                    <button
+                      onclick="setPsikologAgeGroup('${age}')"
+                      class="px-3.5 sm:px-4 py-1.5 rounded-full text-[13.5px] sm:text-[14px] font-heading font-bold transition min-h-[38px] ${
+                        active ? 'bg-primaryBlue text-white shadow-sm' : 'bg-creamCard border border-warmBorder text-espresso hover:bg-white'
+                      }"
+                    >
+                      ${age}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <p class="font-bold text-[14.5px] sm:text-[15px] text-espresso mb-3.5">${currentAgeData.subtitle}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              ${currentAgeData.items.map(item => `
+                <div class="bg-creamCard/95 border border-warmBorder rounded-2xl p-4">
+                  <h4 class="font-heading font-bold text-[15px] sm:text-[15.5px] text-primaryBlue mb-1">• ${item.label}</h4>
+                  <p class="text-[14px] sm:text-[14.5px] text-espresso/90 leading-relaxed">${item.detail}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Filter Rekomendasi Psikolog -->
+          <div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+              <div>
+                <h2 class="rod-sub-judul">Rekomendasi Layanan Psikolog</h2>
+                <p class="text-[14.5px] sm:text-[15px] text-mutedBrown mt-0.5">Pilihan klinik/rumah sakit tatap muka di Bandung serta platform konseling online</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                ${[
+                  { key: 'Semua', label: 'Semua (18)' },
+                  { key: 'Offline', label: 'Offline Bandung (9)' },
+                  { key: 'Online', label: 'Online (9)' }
+                ].map(m => {
+                  const active = state.psikologMode === m.key;
+                  return `
+                    <button
+                      onclick="setPsikologMode('${m.key}')"
+                      class="px-3.5 sm:px-4 py-1.5 rounded-full text-[13.5px] sm:text-[14px] font-heading font-bold transition min-h-[38px] ${
+                        active ? 'bg-secondaryTerracotta text-white shadow-sm' : 'bg-creamCard border border-warmBorder text-espresso hover:bg-softSecondaryBg/60'
+                      }"
+                    >
+                      ${m.label}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            ${showOffline ? `
+              <div class="mb-7">
+                <h3 class="font-heading font-bold text-[18px] sm:text-[20px] text-espresso mb-3.5 flex flex-wrap items-center gap-2">
+                  <span class="px-3 py-0.5 rounded-full bg-softSecondaryBg text-[#9E5E31] text-[13px]">Offline</span>
+                  <span>Rekomendasi Psikolog Tatap Muka (Area Bandung)</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  ${PSIKOLOG_DATA.offlineList.map((item, idx) => `
+                    <div class="bg-creamCard border border-warmBorder rounded-[24px] p-5 shadow-softCard flex flex-col justify-between">
+                      <div>
+                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                          <span class="px-2.5 py-0.5 rounded-full text-[12px] font-heading font-bold bg-softSecondaryBg text-[#9E5E31]">
+                            Bandung #0${idx + 1}
+                          </span>
+                        </div>
+                        <h4 class="font-heading font-bold text-[18px] sm:text-[18.5px] text-espresso leading-snug mb-2">${item.name}</h4>
+                        <div class="space-y-1.5 text-[14px] text-espresso/90 mb-3">
+                          <p><strong>📍 Alamat:</strong> ${item.address}</p>
+                          <p><strong>💰 Kisaran Harga:</strong> ${item.price}</p>
+                          <p><strong>📞 Kontak / Daftar:</strong> ${item.contact}</p>
+                        </div>
+                        ${item.puskesmasList ? `
+                          <details class="mb-3 bg-cream border border-warmBorder rounded-xl p-3">
+                            <summary class="cursor-pointer font-heading font-bold text-[14px] text-primaryBlue">
+                              Lihat Daftar 12 Alamat Puskesmas Bandung ▾
+                            </summary>
+                            <ol class="list-decimal pl-5 mt-2 space-y-1 text-[13.5px] text-espresso/90">
+                              ${item.puskesmasList.map(pk => `<li>${pk}</li>`).join('')}
+                            </ol>
+                          </details>
+                        ` : ''}
+                      </div>
+                      <div class="bg-cream border border-warmBorder rounded-xl px-3.5 py-2.5 text-[13.5px] text-mutedBrown leading-relaxed">
+                        <strong class="text-espresso">Catatan:</strong> ${item.note}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            ${showOnline ? `
+              <div>
+                <h3 class="font-heading font-bold text-[18px] sm:text-[20px] text-espresso mb-3.5 flex flex-wrap items-center gap-2">
+                  <span class="px-3 py-0.5 rounded-full bg-softBlueBg text-primaryBlue text-[13px]">Online</span>
+                  <span>Rekomendasi Psikolog Online</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  ${PSIKOLOG_DATA.onlineList.map((item, idx) => `
+                    <div class="bg-creamCard border border-warmBorder rounded-[24px] p-5 shadow-softCard flex flex-col justify-between">
+                      <div>
+                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                          <span class="px-2.5 py-0.5 rounded-full text-[12px] font-heading font-bold bg-softBlueBg text-primaryBlue">
+                            Online #0${idx + 1}
+                          </span>
+                        </div>
+                        <h4 class="font-heading font-bold text-[18px] sm:text-[18.5px] text-espresso leading-snug mb-2">${item.name}</h4>
+                        <div class="space-y-1.5 text-[14px] text-espresso/90 mb-3">
+                          <p><strong>💻 Metode:</strong> ${item.method}</p>
+                          <p><strong>💰 Kisaran Harga:</strong> ${item.price}</p>
+                          <p><strong>📞 Kontak / Daftar:</strong> ${item.contact}</p>
+                        </div>
+                      </div>
+                      <div class="bg-softBlueBg/55 border border-primaryBlue/15 rounded-xl px-3.5 py-2.5 text-[13.5px] text-espresso/90 leading-relaxed">
+                        <strong>Catatan:</strong> ${item.note}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    /* Tab 4: Psikiater */
+    function renderPsikiaterDetailTab() {
+      return `
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div class="bg-softMintBg/80 border border-compMint/60 rounded-[24px] sm:rounded-[28px] p-5 sm:p-6">
+              <span class="inline-block px-3 py-1 rounded-full bg-creamCard text-[#2C7A5B] font-heading font-bold text-[13px] mb-2">
+                Dokter Spesialis Kedokteran Jiwa (Sp.KJ)
+              </span>
+              <h2 class="rod-sub-judul mb-2">Apa itu Psikiater?</h2>
+              <p class="rod-body-text text-espresso/90 leading-relaxed">
+                ${PSIKIATER_DATA.apaItu}
+              </p>
+            </div>
+
+            <div class="bg-creamCard border border-warmBorder rounded-[24px] sm:rounded-[28px] p-5 sm:p-6 shadow-softCard">
+              <span class="inline-block px-3 py-1 rounded-full bg-softYellowBg text-[#9B6B0C] font-heading font-bold text-[13px] mb-2">
+                Indikasi Medis
+              </span>
+              <h2 class="rod-sub-judul mb-2">Kapan perlu menemui psikiater?</h2>
+              <p class="rod-body-text text-espresso/90 leading-relaxed">
+                ${PSIKIATER_DATA.kapanKePsikiater}
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="rod-sub-judul mb-1">Rekomendasi Psikiater Offline (Area Bandung)</h2>
+            <p class="text-[14.5px] sm:text-[15px] text-mutedBrown mb-4">Rumah sakit dengan layanan poli kedokteran jiwa (Sp.KJ) di Bandung dan sekitarnya</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${PSIKIATER_DATA.offlineRS.map((rs, idx) => `
+                <div class="bg-creamCard border border-warmBorder rounded-[24px] p-5 shadow-softCard">
+                  <span class="inline-block px-2.5 py-0.5 rounded-full text-[12px] font-heading font-bold bg-softMintBg text-[#2C7A5B] mb-2">
+                    Rumah Sakit #0${idx + 1}
+                  </span>
+                  <h3 class="font-heading font-bold text-[18px] sm:text-[19px] text-espresso mb-2">${rs.name}</h3>
+                  <div class="space-y-1.5 text-[14px] sm:text-[14.5px] text-espresso/90">
+                    <p><strong>📍 Alamat:</strong> ${rs.address}</p>
+                    <p><strong>📞 Telepon / WA:</strong> ${rs.phone}</p>
+                    <p><strong>💰 Biaya Konsultasi:</strong> ${rs.price}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div>
+            <h2 class="rod-sub-judul mb-1">Platform Konsultasi Psikiater Online</h2>
+            <p class="text-[14.5px] sm:text-[15px] text-mutedBrown mb-4">Alternatif konsultasi jarak jauh dengan dokter spesialis kedokteran jiwa (Sp.KJ)</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              ${PSIKIATER_DATA.onlineApps.map((app, idx) => `
+                <div class="bg-softBlueBg/75 border border-primaryBlue/20 rounded-[24px] p-5 flex flex-col justify-between">
+                  <div>
+                    <span class="inline-block px-2.5 py-0.5 rounded-full text-[12px] font-heading font-bold bg-creamCard text-primaryBlue mb-2">
+                      Platform #0${idx + 1}
+                    </span>
+                    <h3 class="font-heading font-bold text-[18px] sm:text-[19px] text-espresso">${app.name}</h3>
+                    <p class="text-[13.5px] font-bold text-primaryBlue mb-2.5">🌐 ${app.website}</p>
+                    <p class="text-[14px] sm:text-[14.5px] text-espresso/90 leading-relaxed mb-3">${app.service}</p>
+                  </div>
+                  <div class="bg-creamCard/90 border border-warmBorder rounded-xl px-3.5 py-2 text-[13.5px] text-espresso">
+                    <strong>Biaya:</strong> ${app.price}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* -------------------- VIEW 4: REKOMENDASI TEMPAT HEALING -------------------- */
+    function getPlaceIllustration(type) {
+      if (type === 'forest') {
+        return `
+          <svg class="w-full h-24 sm:h-28" viewBox="0 0 280 110" fill="none">
+            <rect width="280" height="110" rx="18" fill="#E5F7EF" />
+            <circle cx="225" cy="30" r="14" fill="#FFD166" />
+            <path d="M55 88 L75 40 L95 88 Z" fill="#FFF9F2" stroke="#3A9672" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M90 88 L116 28 L142 88 Z" fill="#FFF9F2" stroke="#3A9672" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M135 88 L155 46 L175 88 Z" fill="#FFF9F2" stroke="#3A9672" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M25 89 Q 140 82, 255 89" stroke="#3A9672" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        `;
+      }
+      if (type === 'cafe') {
+        return `
+          <svg class="w-full h-24 sm:h-28" viewBox="0 0 280 110" fill="none">
+            <rect width="280" height="110" rx="18" fill="#F6EAE0" />
+            <path d="M105 50 H165 V70 C165 82 154 90 135 90 C116 90 105 82 105 70 V50 Z" fill="#FFF9F2" stroke="#C98A5A" stroke-width="2.6" />
+            <path d="M165 56 H174 C179 56 183 60 183 65 C183 70 179 74 174 74 H165" stroke="#C98A5A" stroke-width="2.6" stroke-linecap="round" />
+            <path d="M124 38 Q 120 30, 125 22" stroke="#C98A5A" stroke-width="2.4" stroke-linecap="round" />
+            <path d="M144 38 Q 140 30, 145 22" stroke="#C98A5A" stroke-width="2.4" stroke-linecap="round" />
+          </svg>
+        `;
+      }
+      if (type === 'library') {
+        return `
+          <svg class="w-full h-24 sm:h-28" viewBox="0 0 280 110" fill="none">
+            <rect width="280" height="110" rx="18" fill="#E6F1FC" />
+            <rect x="85" y="28" width="110" height="58" rx="10" fill="#FFF9F2" stroke="#3E8EDE" stroke-width="2.5" />
+            <line x1="140" y1="28" x2="140" y2="86" stroke="#3E8EDE" stroke-width="2.5" />
+            <line x1="100" y1="45" x2="128" y2="45" stroke="#C98A5A" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="100" y1="58" x2="125" y2="58" stroke="#3E8EDE" stroke-width="2.3" stroke-linecap="round" />
+            <line x1="152" y1="45" x2="180" y2="45" stroke="#C98A5A" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="152" y1="58" x2="176" y2="58" stroke="#3E8EDE" stroke-width="2.3" stroke-linecap="round" />
+          </svg>
+        `;
+      }
+      return `
+        <svg class="w-full h-24 sm:h-28" viewBox="0 0 280 110" fill="none">
+          <rect width="280" height="110" rx="18" fill="#FFF5D6" />
+          <ellipse cx="140" cy="78" rx="75" ry="13" fill="#FFF9F2" stroke="#C58B16" stroke-width="2.4" />
+          <path d="M140 70 C132 56, 120 56, 124 68 C128 74, 140 70, 140 70 Z" fill="#FFF9F2" stroke="#C58B16" stroke-width="2.3" />
+          <path d="M140 70 C148 56, 160 56, 156 68 C152 74, 140 70, 140 70 Z" fill="#FFF9F2" stroke="#C58B16" stroke-width="2.3" />
+          <path d="M140 70 C134 50, 146 50, 140 70 Z" fill="#FFD166" />
+        </svg>
+      `;
+    }
+
+    function renderTempatHealingView() {
+      const areas = [
+        'Semua',
+        'Bandung Pusat',
+        'Bandung Utara',
+        'Bandung Timur',
+        'Bandung Selatan',
+        'Bandung Barat & Cimahi'
+      ];
+
+      const filtered = HEALING_PLACES.filter(p => {
+        const matchArea =
+          state.healingAreaFilter === 'Semua'
+            ? true
+            : p.area === state.healingAreaFilter;
+        const q = state.healingSearch.toLowerCase();
+        const matchSearch =
+          !q ||
+          p.name.toLowerCase().includes(q) ||
+          p.location.toLowerCase().includes(q) ||
+          p.tag.toLowerCase().includes(q) ||
+          p.vibes.toLowerCase().includes(q) ||
+          p.cocokBuat.toLowerCase().includes(q);
+        return matchArea && matchSearch;
+      });
+
+      const accentBadge = {
+        blue: 'bg-softBlueBg text-primaryBlue',
+        terracotta: 'bg-softSecondaryBg text-[#9E5E31]',
+        mint: 'bg-softMintBg text-[#2C7A5B]',
+        yellow: 'bg-softYellowBg text-[#9B6B0C]'
+      };
+
+      return `
+        <div class="view-enter">
+          <div class="mb-5 sm:mb-6">
+            <button onclick="navigateTo('beranda')" class="inline-flex items-center gap-1.5 text-[14px] font-bold text-primaryBlue hover:underline mb-1.5 py-1">
+              ← Kembali ke Beranda
+            </button>
+            <h1 class="rod-judul-besar">Rekomendasi Tempat Healing</h1>
+            <p class="font-hand text-[19px] sm:text-[21px] text-mutedBrown mt-0.5">22 sudut nyaman di Bandung dan sekitarnya untuk menarik napas dan menenangkan pikiran ♡</p>
+          </div>
+
+          <!-- Area Filter + Search Bar -->
+          <div class="flex flex-col gap-3.5 mb-6">
+            <div class="flex flex-wrap gap-2">
+              ${areas.map(area => {
+                const active = state.healingAreaFilter === area;
+                return `
+                  <button
+                    onclick="setHealingAreaFilter('${area}')"
+                    class="px-3.5 sm:px-4 py-2 rounded-full text-[13.5px] sm:text-[14.5px] font-heading font-bold transition min-h-[40px] ${
+                      active
+                        ? 'bg-primaryBlue text-white shadow-sm'
+                        : 'bg-creamCard border border-warmBorder text-espresso hover:bg-softBlueBg/70'
+                    }"
+                  >
+                    ${area}
+                  </button>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="relative w-full sm:w-80">
+              <input
+                type="text"
+                value="${state.healingSearch}"
+                oninput="setHealingSearch(this.value)"
+                placeholder="Cari nama tempat, buku, pinus, gratis..."
+                class="w-full pl-9 pr-4 py-2.5 rounded-full bg-creamCard border border-warmBorder text-[16px] sm:text-[14.5px] text-espresso placeholder:text-mutedBrown/60 focus:outline-none focus:border-primaryBlue"
+              />
+              <svg class="w-4 h-4 text-mutedBrown absolute left-3.5 top-3.5 sm:top-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+            ${filtered.map(place => {
+              return `
+                <div class="bg-creamCard border border-warmBorder rounded-[24px] p-5 shadow-softCard flex flex-col justify-between">
+                  <div>
+                    <div class="relative mb-3.5 sm:mb-4">
+                      ${getPlaceIllustration(place.sceneType)}
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                      <span class="px-2.5 py-0.5 rounded-full text-[12px] font-heading font-bold ${accentBadge[place.accent]}">
+                        ${place.area}
+                      </span>
+                      <span class="px-2.5 py-0.5 rounded-full text-[12px] font-heading font-bold bg-cream border border-warmBorder text-mutedBrown">
+                        ${place.tag}
+                      </span>
+                    </div>
+
+                    <h3 class="font-heading font-bold text-[18.5px] sm:text-[19.5px] text-espresso leading-snug">${place.name}</h3>
+                    <p class="text-[13.5px] sm:text-[14px] text-primaryBlue font-bold mt-1">📍 ${place.location}</p>
+                    <p class="text-[13.5px] sm:text-[14px] text-espresso mt-1"><strong>💰 Bujet:</strong> ${place.budget}</p>
+
+                    <div class="mt-3 space-y-2 text-[14px] sm:text-[14.5px] text-mutedBrown leading-relaxed">
+                      <p><strong class="text-espresso">✨ Vibes-nya:</strong> ${place.vibes}</p>
+                      <p><strong class="text-espresso">🌿 Cocok buat:</strong> ${place.cocokBuat}</p>
+                    </div>
+                  </div>
+
+                  <div class="mt-4 pt-3.5 border-t border-warmBorder flex items-center justify-between gap-2">
+                    <a
+                      href="${place.mapsUrl}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 sm:py-2 rounded-full bg-primaryBlue hover:bg-primaryBlueHover text-white font-heading font-bold text-[13.5px] shadow-sm transition min-h-[40px]"
+                    >
+                      <span>Buka di Google Maps</span>
+                      <span>↗</span>
+                    </a>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          ${filtered.length === 0 ? `
+            <div class="text-center py-12 px-4 bg-creamCard rounded-[24px] border border-warmBorder">
+              <p class="font-heading font-bold text-[18px] sm:text-[19px] text-espresso">Belum ada tempat healing yang cocok dengan filtermu</p>
+              <button onclick="resetHealingFilters()" class="mt-3 px-5 py-2.5 rounded-full bg-primaryBlue text-white text-[14px] font-bold min-h-[42px]">
+                Tampilkan Semua Tempat
+              </button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function setHealingAreaFilter(area) {
+      state.healingAreaFilter = area;
+      renderCurrentView();
+    }
+
+    function setHealingSearch(val) {
+      state.healingSearch = val;
+      renderCurrentView();
+    }
+
+    function resetHealingFilters() {
+      state.healingAreaFilter = 'Semua';
+      state.healingSearch = '';
+      renderCurrentView();
+    }
+
+    /* -------------------- VIEW 5: REKOMENDASI BUKU -------------------- */
+    function renderBukuView() {
+      const categories = [
+        'Semua',
+        'Pengembangan Diri',
+        'Filsafat & Psikologi Populer',
+        'Esai Reflektif',
+        'Prosa & Puisi'
+      ];
+
+      const filtered = BOOKS.filter(b => {
+        if (state.bookFilter === 'Semua') return true;
+        return b.category === state.bookFilter;
+      });
+
+      const coverStyles = {
+        blue: { box: 'bg-softBlueBg border-primaryBlue/30', stroke: '#3E8EDE', badge: 'bg-softBlueBg text-primaryBlue', quote: 'border-primaryBlue' },
+        terracotta: { box: 'bg-softSecondaryBg border-secondaryTerracotta/35', stroke: '#C98A5A', badge: 'bg-softSecondaryBg text-[#9E5E31]', quote: 'border-secondaryTerracotta' },
+        mint: { box: 'bg-softMintBg border-compMint', stroke: '#3A9672', badge: 'bg-softMintBg text-[#2C7A5B]', quote: 'border-compMint' },
+        yellow: { box: 'bg-softYellowBg border-compYellow', stroke: '#C58B16', badge: 'bg-softYellowBg text-[#9B6B0C]', quote: 'border-compYellow' }
+      };
+
+      return `
+        <div class="view-enter">
+          <div class="mb-5 sm:mb-6">
+            <button onclick="navigateTo('beranda')" class="inline-flex items-center gap-1.5 text-[14px] font-bold text-primaryBlue hover:underline mb-1.5 py-1">
+              ← Kembali ke Beranda
+            </button>
+            <h1 class="rod-judul-besar">Rekomendasi Buku</h1>
+            <p class="font-hand text-[19px] sm:text-[21px] text-mutedBrown mt-0.5">Bacaan hangat yang menemanimu bertumbuh perlahan ♡</p>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            ${categories.map(cat => {
+              const active = state.bookFilter === cat;
+              return `
+                <button
+                  onclick="setBookFilter('${cat}')"
+                  class="px-3.5 sm:px-4 py-2 rounded-full text-[13.5px] sm:text-[14.5px] font-heading font-bold transition min-h-[40px] ${
+                    active
+                      ? 'bg-primaryBlue text-white shadow-sm'
+                      : 'bg-creamCard border border-warmBorder text-espresso hover:bg-softBlueBg/70'
+                  }"
+                >
+                  ${cat}
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+            ${filtered.map((book, idx) => {
+              const style = coverStyles[book.accent];
+              return `
+                <div class="bg-creamCard border border-warmBorder rounded-[24px] p-5 sm:p-6 shadow-softCard flex flex-col justify-between">
+                  <div>
+                    <div class="flex gap-3.5 sm:gap-4">
+                      <div class="w-16 h-24 sm:w-20 sm:h-28 rounded-2xl ${style.box} border flex flex-col items-center justify-center p-2 text-center flex-shrink-0">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 mb-1" viewBox="0 0 32 32" fill="none" stroke="${style.stroke}" stroke-width="2.2" stroke-linecap="round">
+                          <path d="M6 7H24V25H6V7Z" />
+                          <line x1="10" y1="7" x2="10" y2="25" />
+                          <line x1="14" y1="13" x2="20" y2="13" />
+                          <line x1="14" y1="17" x2="19" y2="17" />
+                        </svg>
+                        <span class="rod-note-text font-bold uppercase tracking-wider text-espresso/85">Buku #0${idx + 1}</span>
+                      </div>
+
+                      <div class="flex-1 min-w-0">
+                        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11.5px] font-heading font-bold ${style.badge} mb-1">
+                          ${book.category}
+                        </span>
+                        <h3 class="font-heading font-bold text-[18px] sm:text-[19px] text-espresso leading-snug">
+                          ${book.title}
+                        </h3>
+                        <p class="text-[13.5px] sm:text-[14px] font-bold text-primaryBlue mt-0.5">oleh ${book.author}</p>
+                        <p class="text-[12px] sm:text-[12.5px] text-mutedBrown mt-1">📚 ${book.bookType}</p>
+                      </div>
+                    </div>
+
+                    <div class="bg-cream border-l-4 ${style.quote} rounded-r-xl px-3.5 py-2.5 mt-4 text-[13.5px] sm:text-[14px] text-espresso">
+                      <strong>Tema Besar:</strong> ${book.theme}
+                    </div>
+
+                    <p class="text-[14.5px] sm:text-[15px] text-mutedBrown leading-relaxed mt-3">
+                      <strong class="text-espresso">Sinopsis:</strong> ${book.synopsis}
+                    </p>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function setBookFilter(cat) {
+      state.bookFilter = cat;
+      renderCurrentView();
+    }
+  </script>
+</body>
+</html>
